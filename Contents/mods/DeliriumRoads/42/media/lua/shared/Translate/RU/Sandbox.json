@@ -1,7 +1,5 @@
 {
 	"Sandbox_DelRoads": "Delirium Roads",
-	"Sandbox_DelRoads_TilesPerBag": "Клеток на мешок",
-	"Sandbox_DelRoads_TilesPerBag_tooltip": "Сколько клеток дороги заделывает один мешок цемента и один мешок гравия.",
 	"Sandbox_DelRoads_RepairLastsDays": "Ремонт держится, игровых дней",
 	"Sandbox_DelRoads_RepairLastsDays_tooltip": "Примерно через столько игровых дней (плюс-минус четверть) отремонтированная клетка трескается снова.",
 	"Sandbox_DelRoads_RequireOrder": "Ремонт только по нарядам",

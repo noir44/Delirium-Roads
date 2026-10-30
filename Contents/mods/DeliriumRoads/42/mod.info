@@ -1,7 +1,9 @@
 name=Delirium Roads
 poster=poster.png
+pack=delroads
+tiledef=delroads 1616
 id=DelRoads
 require=\DelEcon
-description=City Hall staff mend the cracked roads: a mason's trowel, cement and gravel (one bag of each per 25 tiles by default). Mended tiles crack again after a while. Mayors mark road work orders; mending can be limited to them. Requires Delirium Economy. Build 42.
+description=City Hall staff mend the cracked roads with a trowel and asphalt mix made on powered benches (stone crusher, electric kiln, ball mill, asphalt kettle). Mended tiles crack again after a while. Work orders are paid contracts between City Halls. Requires Delirium Economy. Build 42.
 tags=Build 42
 versionMin=42.13

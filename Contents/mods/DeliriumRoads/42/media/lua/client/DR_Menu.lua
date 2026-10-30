@@ -129,7 +129,7 @@ local function onFill(playerNum, context, worldobjects, test)
 			local tip = ISToolTip:new()
 			tip:initialise()
 			tip:setVisible(false)
-			tip.description = getText("IGUI_DelRoads_RepairTip", tostring(DelRoads.tilesPerBag()))
+			tip.description = getText("IGUI_DelRoads_RepairTip")
 			option.toolTip = tip
 		end
 		if not why then

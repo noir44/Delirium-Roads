@@ -1,8 +1,9 @@
 -- Delirium Roads - definitions shared by client and server.
 --
 -- City Hall staff (Delirium Economy) mend the cracked roads: a timed action
--- on a cracked tile, a mason's trowel, cement and gravel (one bag of each per
--- sandbox DelRoads.TilesPerBag tiles). Staff are paid their monthly salary by
+-- on a cracked tile, a mason's trowel and a bag of asphalt mix (25 tiles a
+-- bag), made on the mod's own powered benches (DR_Benches.lua: crusher, kiln,
+-- ball mill, asphalt kettle). Staff are paid their monthly salary by
 -- Economy; this mod pays nothing itself. A mended tile cracks again after
 -- about DelRoads.RepairLastsDays game days. A mayor can mark road work
 -- orders (a rectangle of the map); with DelRoads.RequireOrder on, staff may
@@ -28,8 +29,7 @@ DelRoads.REACH = 3
 DelRoads.ORDER_MAX_SIDE = 400
 
 DelRoads.TROWEL = "Base.MasonsTrowel"
-DelRoads.CEMENT = "Base.ConcretePowder"
-DelRoads.GRAVEL = "Base.Gravelbag"
+DelRoads.MIX = "DelRoads.AsphaltMix"
 
 -- ---------------------------------------------------------------------------
 -- Sandbox: read at the point of use, never at file scope (see E:\mods\CLAUDE.md).
@@ -37,10 +37,6 @@ DelRoads.GRAVEL = "Base.Gravelbag"
 
 local function sandbox()
 	return SandboxVars and SandboxVars.DelRoads or {}
-end
-
-function DelRoads.tilesPerBag()
-	return math.max(1, math.floor(tonumber(sandbox().TilesPerBag) or 25))
 end
 
 function DelRoads.repairLastsDays()
@@ -219,7 +215,8 @@ function DelRoads.whyNot(player, x, y)
 end
 
 -- ---------------------------------------------------------------------------
--- Materials
+-- Materials: a trowel and a bag of asphalt mix (a drainable, UseDelta 0.04 =
+-- 25 tiles; the bar shows what is left).
 -- ---------------------------------------------------------------------------
 
 local function notEmpty(item)
@@ -230,19 +227,14 @@ function DelRoads.findTrowel(inventory)
 	return inventory:getFirstTypeRecurse(DelRoads.TROWEL)
 end
 
-function DelRoads.findCement(inventory)
-	return inventory:getFirstTypeRecurse(DelRoads.CEMENT)
-end
-
-function DelRoads.findGravel(inventory)
-	return inventory:getFirstTypeEvalRecurse(DelRoads.GRAVEL, notEmpty)
+function DelRoads.findMix(inventory)
+	return inventory:getFirstTypeEvalRecurse(DelRoads.MIX, notEmpty)
 end
 
 -- nil when everything is there, otherwise a translation key.
 function DelRoads.missingMaterial(player)
 	local inventory = player:getInventory()
 	if not DelRoads.findTrowel(inventory) then return "IGUI_DelRoads_NeedTrowel" end
-	if not DelRoads.findCement(inventory) then return "IGUI_DelRoads_NeedCement" end
-	if not DelRoads.findGravel(inventory) then return "IGUI_DelRoads_NeedGravel" end
+	if not DelRoads.findMix(inventory) then return "IGUI_DelRoads_NeedMix" end
 	return nil
 end

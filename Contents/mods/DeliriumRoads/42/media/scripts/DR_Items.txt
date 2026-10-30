@@ -1,0 +1,84 @@
+module DelRoads
+{
+	imports
+	{
+		Base
+	}
+
+	/* 25 tiles a bag; emptied, it is a sack again (like the vanilla Gravelbag) */
+	item AsphaltMix
+	{
+		DisplayName = Asphalt Mix,
+		DisplayCategory = Material,
+		ItemType = base:drainable,
+		Weight = 8.0,
+		Icon = DelRoadsAsphaltMix,
+		UseDelta = 0.04,
+		UseWhileEquipped = false,
+		ReplaceOnDeplete = Base.EmptySandbag,
+		WorldStaticModel = GravelBag,
+	}
+
+	/* binder for the asphalt mix; found as loot (DR_Loot.lua) */
+	item Bitumen
+	{
+		DisplayName = Bitumen Block,
+		DisplayCategory = Material,
+		ItemType = base:normal,
+		Weight = 3.0,
+		Icon = DelRoadsBitumen,
+		WorldStaticModel = ClayBrick,
+	}
+
+	/* kiln -> ball mill */
+	item Clinker
+	{
+		DisplayName = Clinker,
+		DisplayCategory = Material,
+		ItemType = base:normal,
+		Weight = 1.0,
+		Icon = DelRoadsClinker,
+		WorldStaticModel = Limestone,
+	}
+
+	/* benches: 1x1 furniture from the delroads pack, placed like any moveable */
+	item Mov_RoadCrusher
+	{
+		DisplayName = Stone Crusher,
+		DisplayCategory = Furniture,
+		ItemType = base:moveable,
+		Icon = DelRoadsCrusher,
+		Weight = 0.5,
+		WorldObjectSprite = delroads_01_0,
+	}
+
+	item Mov_RoadKiln
+	{
+		DisplayName = Electric Kiln,
+		DisplayCategory = Furniture,
+		ItemType = base:moveable,
+		Icon = DelRoadsKiln,
+		Weight = 0.5,
+		WorldObjectSprite = delroads_01_4,
+	}
+
+	item Mov_RoadMill
+	{
+		DisplayName = Ball Mill,
+		DisplayCategory = Furniture,
+		ItemType = base:moveable,
+		Icon = DelRoadsBallMill,
+		Weight = 0.5,
+		WorldObjectSprite = delroads_01_8,
+	}
+
+	item Mov_RoadKettle
+	{
+		DisplayName = Asphalt Kettle,
+		DisplayCategory = Furniture,
+		ItemType = base:moveable,
+		Icon = DelRoadsAsphaltKettle,
+		Weight = 0.5,
+		WorldObjectSprite = delroads_01_12,
+	}
+}

@@ -1,0 +1,216 @@
+{
+  "pack": "delroads",
+  "tileset": "delroads_01",
+  "columns": 8,
+  "rows": 8,
+  "tiles": [
+    {
+      "index": 0,
+      "png": "frames/delroads_01_0.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Crusher",
+        "Facing": "S",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 1,
+      "png": "frames/delroads_01_1.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Crusher",
+        "Facing": "E",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 2,
+      "png": "frames/delroads_01_2.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Crusher",
+        "Facing": "N",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 3,
+      "png": "frames/delroads_01_3.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Crusher",
+        "Facing": "W",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 4,
+      "png": "frames/delroads_01_4.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Kiln",
+        "Facing": "S",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 5,
+      "png": "frames/delroads_01_5.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Kiln",
+        "Facing": "E",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 6,
+      "png": "frames/delroads_01_6.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Kiln",
+        "Facing": "N",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 7,
+      "png": "frames/delroads_01_7.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Kiln",
+        "Facing": "W",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 8,
+      "png": "frames/delroads_01_8.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Mill",
+        "Facing": "S",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 9,
+      "png": "frames/delroads_01_9.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Mill",
+        "Facing": "E",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 10,
+      "png": "frames/delroads_01_10.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Mill",
+        "Facing": "N",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 11,
+      "png": "frames/delroads_01_11.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Mill",
+        "Facing": "W",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 12,
+      "png": "frames/delroads_01_12.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Kettle",
+        "Facing": "S",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 13,
+      "png": "frames/delroads_01_13.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Kettle",
+        "Facing": "E",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 14,
+      "png": "frames/delroads_01_14.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Kettle",
+        "Facing": "N",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 15,
+      "png": "frames/delroads_01_15.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Kettle",
+        "Facing": "W",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "150",
+        "solidtrans": ""
+      }
+    }
+  ]
+}

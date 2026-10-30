@@ -11,6 +11,7 @@
 if isClient() then return end
 
 require "DR_Shared"
+require "DR_Benches"
 
 local MODULE = DelRoads.MODULE
 local STATE_KEY = "DelRoads_State"
@@ -81,31 +82,13 @@ local function removeItem(player, item)
 	sendRemoveItemFromContainer(container, item)
 end
 
--- One bag of cement and one of gravel per TilesPerBag tiles. Cement is a
--- whole item, gravel is a drainable (UseDelta 0.25), spent use by use as
--- the count passes each quarter. Counted from the tiles this player has
--- ever mended, so no fractions to drift.
+-- One use of the asphalt mix bag per tile; an emptied bag turns into an
+-- empty sack (ReplaceOnDeplete). worked counts tiles per player, for the log.
 local function spend(s, player)
 	local name = player:getUsername()
-	local before = s.worked[name] or 0
-	local after = before + 1
-	s.worked[name] = after
-	local perBag = DelRoads.tilesPerBag()
-	local inventory = player:getInventory()
-	if math.floor(after / perBag) > math.floor(before / perBag) then
-		local cement = DelRoads.findCement(inventory)
-		if cement then removeItem(player, cement) end
-	end
-	local gravel = DelRoads.findGravel(inventory)
-	if gravel then
-		local uses = math.max(1, math.floor(1 / gravel:getUseDelta() + 0.5))
-		local due = math.floor(after * uses / perBag) - math.floor(before * uses / perBag)
-		for _ = 1, due do
-			gravel = DelRoads.findGravel(inventory)
-			if not gravel then break end
-			gravel:UseAndSync()
-		end
-	end
+	s.worked[name] = (s.worked[name] or 0) + 1
+	local mix = DelRoads.findMix(player:getInventory())
+	if mix then mix:UseAndSync() end
 end
 
 -- About RepairLastsDays, give or take a quarter, so a mended street does
@@ -170,6 +153,42 @@ function Commands.repair(player, args)
 	end
 	broadcast("repaired", { bucket = bkey, tile = key })
 	if #inOrders > 0 then transmitOrders() end
+end
+
+-- ---------------------------------------------------------------------------
+-- Commands: benches
+-- ---------------------------------------------------------------------------
+
+-- { x, y, z, recipe }: one run of a bench recipe. Anyone may use a bench;
+-- what is checked is the bench, the power and the inputs.
+function Commands.craft(player, args)
+	local recipe = DelRoads.recipe(args.recipe)
+	local x, y, z = tonumber(args.x), tonumber(args.y), tonumber(args.z)
+	if not recipe or not x or not y or not z then return end
+	if math.abs(player:getX() - (x + 0.5)) > DelRoads.REACH or math.abs(player:getY() - (y + 0.5)) > DelRoads.REACH
+		or math.floor(player:getZ()) ~= math.floor(z) then
+		return notify(player, "IGUI_DelRoads_TooFar")
+	end
+	local square = getCell():getGridSquare(x, y, z)
+	local _, kind = DelRoads.benchAt(square)
+	if kind ~= recipe.bench then return end
+	if not DelRoads.hasPower(square) then return notify(player, "IGUI_DelRoads_NoPower") end
+	local inventory = player:getInventory()
+	if DelRoads.timesPossible(inventory, recipe) < 1 then return notify(player, "IGUI_DelRoads_NoInputs") end
+	for _, input in ipairs(recipe.inputs) do
+		local items = DelRoads.inputItems(inventory, input)
+		for i = 0, items:size() - 1 do removeItem(player, items:get(i)) end
+	end
+	for _, output in ipairs(recipe.outputs) do
+		for _ = 1, output.count do
+			local item = instanceItem(output.type)
+			if item then
+				inventory:AddItem(item)
+				sendAddItemToContainer(inventory, item)
+			end
+		end
+	end
+	log(string.format("Craft: %s %s at %d,%d,%d", player:getUsername(), recipe.id, x, y, z))
 end
 
 -- ---------------------------------------------------------------------------

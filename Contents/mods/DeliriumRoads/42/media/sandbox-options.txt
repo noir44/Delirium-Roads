@@ -1,16 +1,5 @@
 VERSION = 1,
 
-option DelRoads.TilesPerBag
-{
-	type = integer,
-	min = 1,
-	max = 1000,
-	default = 25,
-
-	page = DelRoads,
-	translation = DelRoads_TilesPerBag,
-}
-
 option DelRoads.RepairLastsDays
 {
 	type = integer,

@@ -1,0 +1,108 @@
+module DelRoads
+{
+	imports
+	{
+		Base
+	}
+
+	/* road works benches; the crafting tab label is IGUI_CraftingCategories_RoadWorks */
+
+	craftRecipe BuildRoadCrusher
+	{
+		timedAction = Welding,
+		time = 400,
+		SkillRequired = MetalWelding:3;Electricity:2,
+		Tags = InHandCraft,
+		category = RoadWorks,
+		xpAward = MetalWelding:30;Electricity:20,
+		inputs
+		{
+			item 4 [Base.SheetMetal],
+			item 4 [Base.MetalBar],
+			item 2 [Base.MetalPipe],
+			item 2 [Base.ElectricWire],
+			item 5 [Base.ElectronicsScrap],
+			item 10 [Base.Screws],
+			item 4 [Base.BlowTorch],
+			item 1 tags[base:weldingmask] mode:keep,
+		}
+		outputs
+		{
+			item 1 DelRoads.Mov_RoadCrusher,
+		}
+	}
+
+	craftRecipe BuildRoadKiln
+	{
+		timedAction = Welding,
+		time = 400,
+		SkillRequired = MetalWelding:2;Electricity:3,
+		Tags = InHandCraft,
+		category = RoadWorks,
+		xpAward = MetalWelding:30;Electricity:20,
+		inputs
+		{
+			item 4 [Base.SheetMetal],
+			item 12 [Base.ClayBrick],
+			item 3 [Base.ElectricWire],
+			item 5 [Base.ElectronicsScrap],
+			item 8 [Base.Screws],
+			item 2 [Base.BlowTorch],
+			item 1 tags[base:weldingmask] mode:keep,
+		}
+		outputs
+		{
+			item 1 DelRoads.Mov_RoadKiln,
+		}
+	}
+
+	craftRecipe BuildRoadMill
+	{
+		timedAction = Welding,
+		time = 400,
+		SkillRequired = MetalWelding:3;Electricity:2,
+		Tags = InHandCraft,
+		category = RoadWorks,
+		xpAward = MetalWelding:30;Electricity:20,
+		inputs
+		{
+			item 3 [Base.SheetMetal],
+			item 3 [Base.MetalPipe],
+			item 2 [Base.MetalBar],
+			item 2 [Base.ElectricWire],
+			item 5 [Base.ElectronicsScrap],
+			item 10 [Base.Screws],
+			item 3 [Base.BlowTorch],
+			item 1 tags[base:weldingmask] mode:keep,
+		}
+		outputs
+		{
+			item 1 DelRoads.Mov_RoadMill,
+		}
+	}
+
+	craftRecipe BuildRoadKettle
+	{
+		timedAction = Welding,
+		time = 400,
+		SkillRequired = MetalWelding:2;Electricity:2,
+		Tags = InHandCraft,
+		category = RoadWorks,
+		xpAward = MetalWelding:30;Electricity:20,
+		inputs
+		{
+			item 1 [Base.MetalDrum],
+			item 2 [Base.SheetMetal],
+			item 2 [Base.MetalPipe],
+			item 2 [Base.ElectricWire],
+			item 5 [Base.ElectronicsScrap],
+			item 6 [Base.Screws],
+			item 3 [Base.BlowTorch],
+			item 1 tags[base:weldingmask] mode:keep,
+		}
+		outputs
+		{
+			item 1 DelRoads.Mov_RoadKettle,
+		}
+	}
+}
