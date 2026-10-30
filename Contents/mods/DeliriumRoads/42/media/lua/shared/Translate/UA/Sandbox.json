@@ -1,0 +1,11 @@
+{
+	"Sandbox_DelRoads": "Delirium Roads",
+	"Sandbox_DelRoads_TilesPerBag": "Клітинок на мішок",
+	"Sandbox_DelRoads_TilesPerBag_tooltip": "Скільки клітинок дороги закладає один мішок цементу і один мішок гравію.",
+	"Sandbox_DelRoads_RepairLastsDays": "Ремонт тримається, ігрових днів",
+	"Sandbox_DelRoads_RepairLastsDays_tooltip": "Приблизно через стільки ігрових днів (плюс-мінус чверть) відремонтована клітинка тріскається знову.",
+	"Sandbox_DelRoads_RequireOrder": "Ремонт лише за нарядами",
+	"Sandbox_DelRoads_RequireOrder_tooltip": "Увімк.: працівники ремонтують лише всередині відкритого наряду своєї мерії. Вимк.: будь-яку дорогу, наряди лише показують план мера. Адмінів це не обмежує.",
+	"Sandbox_DelRoads_RepairTime": "Час ремонту клітинки",
+	"Sandbox_DelRoads_RepairTime_tooltip": "Тривалість дії в тіках дій (ванільне штукатурення стіни — 100)."
+}

@@ -1,0 +1,11 @@
+{
+	"Sandbox_DelRoads": "Delirium Roads",
+	"Sandbox_DelRoads_TilesPerBag": "Клеток на мешок",
+	"Sandbox_DelRoads_TilesPerBag_tooltip": "Сколько клеток дороги заделывает один мешок цемента и один мешок гравия.",
+	"Sandbox_DelRoads_RepairLastsDays": "Ремонт держится, игровых дней",
+	"Sandbox_DelRoads_RepairLastsDays_tooltip": "Примерно через столько игровых дней (плюс-минус четверть) отремонтированная клетка трескается снова.",
+	"Sandbox_DelRoads_RequireOrder": "Ремонт только по нарядам",
+	"Sandbox_DelRoads_RequireOrder_tooltip": "Вкл.: сотрудники ремонтируют только внутри открытого наряда своей мэрии. Выкл.: любую дорогу, наряды лишь показывают план мэра. Админов это не ограничивает.",
+	"Sandbox_DelRoads_RepairTime": "Время ремонта клетки",
+	"Sandbox_DelRoads_RepairTime_tooltip": "Длительность действия в тиках действий (ванильная штукатурка стены — 100)."
+}

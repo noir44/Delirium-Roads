@@ -1,0 +1,11 @@
+{
+	"Sandbox_DelRoads": "Delirium Roads",
+	"Sandbox_DelRoads_TilesPerBag": "Tiles per bag",
+	"Sandbox_DelRoads_TilesPerBag_tooltip": "How many road tiles one bag of cement and one bag of gravel mend.",
+	"Sandbox_DelRoads_RepairLastsDays": "Repair lasts, game days",
+	"Sandbox_DelRoads_RepairLastsDays_tooltip": "After about this many game days (give or take a quarter) a mended tile cracks again.",
+	"Sandbox_DelRoads_RequireOrder": "Mend only inside work orders",
+	"Sandbox_DelRoads_RequireOrder_tooltip": "On: staff mend only inside an open work order of their own City Hall. Off: any road, orders only show the mayor's plan. Admins are never limited.",
+	"Sandbox_DelRoads_RepairTime": "Time to mend a tile",
+	"Sandbox_DelRoads_RepairTime_tooltip": "Length of the timed action, in action ticks (vanilla plastering a wall is 100)."
+}

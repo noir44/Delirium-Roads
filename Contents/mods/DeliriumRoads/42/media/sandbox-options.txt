@@ -1,0 +1,43 @@
+VERSION = 1,
+
+option DelRoads.TilesPerBag
+{
+	type = integer,
+	min = 1,
+	max = 1000,
+	default = 25,
+
+	page = DelRoads,
+	translation = DelRoads_TilesPerBag,
+}
+
+option DelRoads.RepairLastsDays
+{
+	type = integer,
+	min = 1,
+	max = 3650,
+	default = 120,
+
+	page = DelRoads,
+	translation = DelRoads_RepairLastsDays,
+}
+
+option DelRoads.RequireOrder
+{
+	type = boolean,
+	default = false,
+
+	page = DelRoads,
+	translation = DelRoads_RequireOrder,
+}
+
+option DelRoads.RepairTime
+{
+	type = integer,
+	min = 1,
+	max = 2000,
+	default = 150,
+
+	page = DelRoads,
+	translation = DelRoads_RepairTime,
+}
