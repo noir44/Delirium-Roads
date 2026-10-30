@@ -10,11 +10,12 @@ SRC = os.path.join(ROOT, "art", "meshy")
 PZ_PART = r"E:\mods\Delirium-Terminal\tools\pz_part.py"
 BLENDER = r"C:\Program Files\Blender Foundation\Blender 5.2\blender.exe"
 
-# model: glb, longest side m, height m, triangles. Real sizes lying on the floor.
+# model: glb, longest side m, height m, triangles, texture px. Real sizes on the floor; the mix
+# sack stands upright and its label needs 512 px.
 SIZE = {
-    "AsphaltMix": ("item_asphaltmix", 0.60, 0.22, 1200),
-    "Bitumen": ("item_bitumen", 0.25, 0.11, 600),
-    "Clinker": ("item_clinker", 0.18, 0.08, 1000),
+    "AsphaltMix": ("item_asphaltmix2", 0.40, 0.58, 1500, 512),
+    "Bitumen": ("item_bitumen", 0.25, 0.11, 600, 256),
+    "Clinker": ("item_clinker", 0.18, 0.08, 1000, 256),
 }
 
 mesh_dir = os.path.join(MEDIA, "models_X", "WorldItems")
@@ -24,12 +25,12 @@ for d in (mesh_dir, tex_dir, prev_dir):
     os.makedirs(d, exist_ok=True)
 
 script = ["module DelRoads", "{"]
-for name, (glb, longest, height, tris) in SIZE.items():
+for name, (glb, longest, height, tris, tex) in SIZE.items():
     out = subprocess.run([BLENDER, "-b", "-P", PZ_PART, "--", os.path.abspath(os.path.join(SRC, glb + ".glb")),
                           os.path.abspath(os.path.join(mesh_dir, "DR_" + name + ".fbx")),
                           os.path.abspath(os.path.join(tex_dir, "DR_" + name + ".png")),
                           str(longest), str(height), str(tris), "keep",
-                          os.path.abspath(os.path.join(prev_dir, name + ".png"))],
+                          os.path.abspath(os.path.join(prev_dir, name + ".png")), str(tex)],
                          capture_output=True, text=True)
     line = [l for l in out.stdout.splitlines() if l.startswith("PART")]
     print(name, line[0] if line else "FAILED\n" + out.stdout[-1500:] + out.stderr[-1500:])
