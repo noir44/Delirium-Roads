@@ -139,6 +139,7 @@ local function onReceiveGlobalModData(key, data)
 	ModData.remove(key)
 	ModData.add(key, data)
 	ordersReceived = true
+	if DelRoads.trackOwnOrders then DelRoads.trackOwnOrders() end
 	refreshWindows()
 end
 Events.OnReceiveGlobalModData.Add(onReceiveGlobalModData)
@@ -180,6 +181,11 @@ function Replies.repaired(args)
 	local bucket = cache[args.bucket or ""]
 	if bucket then bucket[args.tile] = true end
 	stripLoaded(args.tile)
+end
+
+-- An order this player just took: show its area.
+function Replies.accepted(args)
+	if DelRoads.setTracked and type(args.id) == "string" then DelRoads.setTracked(args.id, true) end
 end
 
 -- The cracks come back the next time those squares load.

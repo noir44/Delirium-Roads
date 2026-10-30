@@ -40,10 +40,19 @@ local function state()
 	return s
 end
 
+-- Orders from before customers and contractors: open ones stay open,
+-- closed ones count as done.
 local function orders()
 	local o = ModData.getOrCreate(ORDERS_KEY)
 	if type(o.list) ~= "table" then o.list = {} end
 	if o.nextId == nil then o.nextId = 1 end
+	for _, order in pairs(o.list) do
+		if order.status == nil then
+			order.status = order.closed and DelRoads.DONE or DelRoads.OPEN
+			order.closed = nil
+			order.price = order.price or 0
+		end
+	end
 	return o
 end
 
@@ -164,15 +173,21 @@ function Commands.repair(player, args)
 end
 
 -- ---------------------------------------------------------------------------
--- Commands: the hall's mayor or admin
+-- Commands: work orders
 -- ---------------------------------------------------------------------------
 
--- { hall, title, x1, y1, x2, y2 }
+local function orderLabel(id, order)
+	return string.format("%s '%s'", tostring(id), tostring(order.title or ""))
+end
+
+-- The customer hall's mayor or an admin. { hall, title, price, x1, y1, x2, y2 }
 function Commands.createOrder(player, args)
 	local hall = DelEcon.getHall(DelEcon.getState(), args.hall)
 	if not DelEcon.canManage(hall, player) then return end
 	local x1, y1, x2, y2 = tonumber(args.x1), tonumber(args.y1), tonumber(args.x2), tonumber(args.y2)
 	if not x1 or not y1 or not x2 or not y2 then return end
+	local price = DelShops.parseAmount(args.price)
+	if not price or price < 0 then return notify(player, "IGUI_DelRoads_BadPrice") end
 	x1, x2 = math.floor(math.min(x1, x2)), math.floor(math.max(x1, x2))
 	y1, y2 = math.floor(math.min(y1, y2)), math.floor(math.max(y1, y2))
 	if x2 - x1 + 1 > DelRoads.ORDER_MAX_SIDE or y2 - y1 + 1 > DelRoads.ORDER_MAX_SIDE then
@@ -182,39 +197,84 @@ function Commands.createOrder(player, args)
 	local id = tostring(o.nextId)
 	o.nextId = o.nextId + 1
 	o.list[id] = { hall = args.hall, title = string.sub(trim(args.title), 1, 60), x1 = x1, y1 = y1, x2 = x2, y2 = y2,
-		by = player:getUsername(), created = DelRoads.today(), done = 0, closed = false }
-	log(string.format("Order %s: %s hall %s '%s' %d,%d-%d,%d", id, player:getUsername(), tostring(args.hall),
-		o.list[id].title, x1, y1, x2, y2))
+		price = DelShops.round(price), by = player:getUsername(), created = DelRoads.today(), done = 0,
+		status = DelRoads.OPEN }
+	log(string.format("Order %s: %s hall %s price %s %d,%d-%d,%d", orderLabel(id, o.list[id]), player:getUsername(),
+		tostring(args.hall), tostring(price), x1, y1, x2, y2))
 	transmitOrders()
 	notify(player, "IGUI_DelRoads_OrderCreated", id)
 end
 
-local function managedOrder(player, args)
+-- Staff or mayor of another hall takes an open order for that hall. { id, hall }
+function Commands.acceptOrder(player, args)
 	local o = orders()
-	local order = o.list[tostring(args.id or "")]
-	if not order then return nil end
-	if not DelEcon.canManage(DelEcon.getHall(DelEcon.getState(), order.hall), player)
-		and not DelShops.hasAdminRights(player) then
-		return nil
+	local id = tostring(args.id or "")
+	local order = o.list[id]
+	if not order or order.status ~= DelRoads.OPEN then return notify(player, "IGUI_DelRoads_OrderTaken") end
+	local allowed = false
+	for _, hallId in ipairs(DelRoads.contractorHalls(order, player)) do
+		if hallId == args.hall then allowed = true end
 	end
-	return o, order
+	if not allowed then return end
+	order.status = DelRoads.ACCEPTED
+	order.contractor = args.hall
+	order.acceptedBy = player:getUsername()
+	order.done = 0
+	log(string.format("Order %s: accepted by %s for hall %s", orderLabel(id, order), player:getUsername(),
+		tostring(args.hall)))
+	transmitOrders()
+	reply(player, "accepted", { id = id })
 end
 
--- { id, closed }
-function Commands.setOrderClosed(player, args)
-	local o, order = managedOrder(player, args)
-	if not order then return end
-	order.closed = args.closed == true
-	log(string.format("Order %s: %s closed=%s", tostring(args.id), player:getUsername(), tostring(order.closed)))
+-- The contractor gives an accepted order back: open again for anyone.
+function Commands.refuseOrder(player, args)
+	local o = orders()
+	local id = tostring(args.id or "")
+	local order = o.list[id]
+	if not order or not DelRoads.isContractor(order, player) then return end
+	log(string.format("Order %s: given back by %s (hall %s)", orderLabel(id, order), player:getUsername(),
+		tostring(order.contractor)))
+	order.status = DelRoads.OPEN
+	order.contractor, order.acceptedBy = nil, nil
 	transmitOrders()
 end
 
--- { id }
+-- The contractor reports the order done and is paid at once from the
+-- customer's treasury; not enough there - nothing moves, the order stays
+-- accepted and can be reported again later.
+function Commands.completeOrder(player, args)
+	local o = orders()
+	local id = tostring(args.id or "")
+	local order = o.list[id]
+	if not order or not DelRoads.isContractor(order, player) then return end
+	local price = DelShops.round(order.price or 0)
+	if price > 0 then
+		local note = "#" .. id
+		if not DelEcon.hallTransfer or not DelEcon.hallTransfer(order.hall, order.contractor, price,
+			player:getUsername(), note) then
+			log(string.format("Order %s: %s reported done, customer hall %s cannot pay %s", orderLabel(id, order),
+				player:getUsername(), tostring(order.hall), tostring(price)))
+			return notify(player, "IGUI_DelRoads_CustomerCannotPay")
+		end
+	end
+	order.status = DelRoads.DONE
+	order.doneBy = player:getUsername()
+	order.finished = DelRoads.today()
+	log(string.format("Order %s: done by %s, hall %s paid %s by hall %s, %d tiles", orderLabel(id, order),
+		player:getUsername(), tostring(order.contractor), tostring(price), tostring(order.hall), order.done or 0))
+	transmitOrders()
+	notify(player, "IGUI_DelRoads_OrderPaid", Currency.format(price))
+end
+
+-- The customer hall's mayor or an admin, any status.
 function Commands.deleteOrder(player, args)
-	local o, order = managedOrder(player, args)
-	if not order then return end
-	o.list[tostring(args.id)] = nil
-	log(string.format("Order %s: %s deleted", tostring(args.id), player:getUsername()))
+	local o = orders()
+	local id = tostring(args.id or "")
+	local order = o.list[id]
+	if not order or not DelEcon.canManage(DelEcon.getHall(DelEcon.getState(), order.hall), player) then return end
+	o.list[id] = nil
+	log(string.format("Order %s: %s deleted (status %s)", orderLabel(id, order), player:getUsername(),
+		tostring(order.status)))
 	transmitOrders()
 end
 

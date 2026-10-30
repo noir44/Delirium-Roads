@@ -58,18 +58,29 @@ local function onCornerReset()
 	corner = nil
 end
 
-local function onOrderTitle(target, button, hallId, x2, y2)
+-- Second prompt: the price, paid from the customer's treasury when the
+-- contractor reports the order done. target carries the first answers.
+local function onOrderPrice(target, button, playerNum)
 	if button.internal ~= "OK" or not corner then return end
-	DelRoads.send("createOrder", { hall = hallId, title = button.parent.entry:getText(), x1 = corner.x, y1 = corner.y,
-		x2 = x2, y2 = y2 })
+	DelRoads.send("createOrder", { hall = target.hallId, title = target.title, price = button.parent.entry:getText(),
+		x1 = corner.x, y1 = corner.y, x2 = target.x2, y2 = target.y2 })
 	corner = nil
+end
+
+local function onOrderTitle(target, button, hallId, x2, y2, playerNum)
+	if button.internal ~= "OK" or not corner then return end
+	local answers = { hallId = hallId, title = button.parent.entry:getText(), x2 = x2, y2 = y2 }
+	local box = ISTextBox:new(0, 0, 320, 160, getText("IGUI_DelRoads_OrderPricePrompt"), "0", answers, onOrderPrice,
+		playerNum, playerNum)
+	box:initialise()
+	box:addToUIManager()
 end
 
 local function onCornerB(player, square, hallId)
 	if not corner then return end
 	local hall = DelEcon.getHall(DelEcon.getState(), hallId)
 	local box = ISTextBox:new(0, 0, 320, 160, getText("IGUI_DelRoads_OrderTitlePrompt", DelEcon.hallName(hall)), "",
-		{}, onOrderTitle, player:getPlayerNum(), hallId, square:getX(), square:getY())
+		{}, onOrderTitle, player:getPlayerNum(), hallId, square:getX(), square:getY(), player:getPlayerNum())
 	box:initialise()
 	box:addToUIManager()
 end

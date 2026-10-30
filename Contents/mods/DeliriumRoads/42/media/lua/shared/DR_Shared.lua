@@ -132,12 +132,27 @@ function DelRoads.managedHalls(player)
 	return out
 end
 
+-- Mayor or staff of this hall by appointment; admin rights do not count,
+-- since an admin "manages" every hall.
+function DelRoads.isMember(hall, player)
+	if not hall or not player then return false end
+	return DelEcon.isMayorOf(hall, player) or isStaff(hall, player)
+end
+
 -- ---------------------------------------------------------------------------
--- Work orders
+-- Work orders. A City Hall (the customer) orders a stretch of road mended
+-- for a price; staff of another hall (the contractor) accept it, mend it and
+-- report it done, and the price goes from the customer's treasury to the
+-- contractor's (DelEcon.hallTransfer). The contractor's mayor pays the staff.
 -- ---------------------------------------------------------------------------
 
--- orders = { nextId, list = { [id] = { hall, title, x1, y1, x2, y2, by,
---                                      created (game day), done, closed } } }
+DelRoads.OPEN = "open"
+DelRoads.ACCEPTED = "accepted"
+DelRoads.DONE = "done"
+
+-- orders = { nextId, list = { [id] = { hall (customer), title, x1, y1, x2, y2,
+--   price, by, created (game day), status, contractor (hall id),
+--   acceptedBy, doneBy, done (tiles mended in it) } } }
 function DelRoads.getOrders()
 	local orders = ModData.get(DelRoads.ORDERS_KEY)
 	if type(orders) ~= "table" or type(orders.list) ~= "table" then return nil end
@@ -148,29 +163,46 @@ function DelRoads.orderContains(order, x, y)
 	return x >= order.x1 and x <= order.x2 and y >= order.y1 and y <= order.y2
 end
 
--- Ids sorted by number, open ones first.
+local STATUS_ORDER = { open = 1, accepted = 0, done = 2 }
+
+-- Ids: accepted, then open, then done; by number within each.
 function DelRoads.orderIds(orders)
 	local ids = {}
 	if not orders then return ids end
 	for id, _ in pairs(orders.list) do table.insert(ids, id) end
 	table.sort(ids, function(a, b)
-		local oa, ob = orders.list[a], orders.list[b]
-		if (oa.closed == true) ~= (ob.closed == true) then return ob.closed == true end
+		local sa = STATUS_ORDER[orders.list[a].status] or 3
+		local sb = STATUS_ORDER[orders.list[b].status] or 3
+		if sa ~= sb then return sa < sb end
 		return (tonumber(a) or 0) < (tonumber(b) or 0)
 	end)
 	return ids
 end
 
--- Open orders covering the tile whose hall this player works for.
+-- Halls this player could accept the order for: member, not the customer.
+function DelRoads.contractorHalls(order, player)
+	local out = {}
+	local state = DelEcon.getState()
+	for _, id in ipairs(DelEcon.hallIds(state)) do
+		if id ~= order.hall and DelRoads.isMember(state.halls[id], player) then table.insert(out, id) end
+	end
+	return out
+end
+
+-- Staff, mayor or admin of the hall that took the order.
+function DelRoads.isContractor(order, player)
+	return order.status == DelRoads.ACCEPTED
+		and DelRoads.isOfficial(DelEcon.getHall(DelEcon.getState(), order.contractor), player)
+end
+
+-- Accepted orders covering the tile that this player works on.
 function DelRoads.ordersAt(player, x, y)
 	local out = {}
 	local orders = DelRoads.getOrders()
 	if not orders then return out end
-	local state = DelEcon.getState()
 	for _, id in ipairs(DelRoads.orderIds(orders)) do
 		local order = orders.list[id]
-		if not order.closed and DelRoads.orderContains(order, x, y)
-			and DelRoads.isOfficial(DelEcon.getHall(state, order.hall), player) then
+		if DelRoads.orderContains(order, x, y) and DelRoads.isContractor(order, player) then
 			table.insert(out, id)
 		end
 	end
