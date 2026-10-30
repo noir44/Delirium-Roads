@@ -1,0 +1,23 @@
+module DelRoads
+{
+    model DR_AsphaltMix
+    {
+        mesh = WorldItems/DR_AsphaltMix,
+        texture = WorldItems/DR_AsphaltMix,
+        scale = 0.01,
+    }
+
+    model DR_Bitumen
+    {
+        mesh = WorldItems/DR_Bitumen,
+        texture = WorldItems/DR_Bitumen,
+        scale = 0.01,
+    }
+
+    model DR_Clinker
+    {
+        mesh = WorldItems/DR_Clinker,
+        texture = WorldItems/DR_Clinker,
+        scale = 0.01,
+    }
+}

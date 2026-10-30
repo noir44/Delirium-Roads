@@ -16,7 +16,7 @@ module DelRoads
 		UseDelta = 0.04,
 		UseWhileEquipped = false,
 		ReplaceOnDeplete = Base.EmptySandbag,
-		WorldStaticModel = GravelBag,
+		WorldStaticModel = DR_AsphaltMix,
 	}
 
 	/* binder for the asphalt mix; found as loot (DR_Loot.lua) */
@@ -27,7 +27,7 @@ module DelRoads
 		ItemType = base:normal,
 		Weight = 3.0,
 		Icon = DelRoadsBitumen,
-		WorldStaticModel = ClayBrick,
+		WorldStaticModel = DR_Bitumen,
 	}
 
 	/* kiln -> ball mill */
@@ -38,7 +38,7 @@ module DelRoads
 		ItemType = base:normal,
 		Weight = 1.0,
 		Icon = DelRoadsClinker,
-		WorldStaticModel = Limestone,
+		WorldStaticModel = DR_Clinker,
 	}
 
 	/* benches: 1x1 furniture from the delroads pack, placed like any moveable */
