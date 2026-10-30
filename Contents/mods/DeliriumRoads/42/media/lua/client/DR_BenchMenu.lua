@@ -17,9 +17,9 @@ local function tooltip(player, recipe, powered)
 	local inventory = player:getInventory()
 	local lines = { getText("IGUI_DelRoads_Takes") }
 	for _, input in ipairs(recipe.inputs) do
-		local have = inventory:getCountTypeEvalRecurse(input.type, input.test or function() return true end)
+		local have = DelRoads.inputCount(inventory, input)
 		local color = have >= input.count and "<RGB:0.4,1,0.4>" or "<RGB:1,0.4,0.4>"
-		local name = itemName(input.type)
+		local name = input.nameKey and getText(input.nameKey) or itemName(input.type)
 		if input.testKey then name = name .. " (" .. getText(input.testKey) .. ")" end
 		table.insert(lines, string.format(" %s %s %d/%d <RGB:1,1,1> ", color, name, math.min(have, input.count), input.count))
 	end

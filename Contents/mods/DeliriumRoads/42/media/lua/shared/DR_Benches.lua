@@ -2,7 +2,7 @@
 --
 --   stone ----[crusher]----> gravel ----------------------------------.
 --   limestone + clay --[kiln]--> clinker --[ball mill]--> cement ------+
---   bitumen (found as loot) -------------------------------------------+--[asphalt kettle]--> asphalt mix
+--   tyre --[kiln, pyrolysis]--> bitumen (also loot) --------------------+--[asphalt kettle]--> asphalt mix
 --
 -- Benches are 1x1 furniture from the mod's tile pack (delroads_01, four
 -- facings each), built by a craft recipe (scripts/DR_Recipes.txt) and placed
@@ -26,7 +26,8 @@ local function full(item)
 	return item:getCurrentUsesFloat() >= 0.999
 end
 
--- inputs: { type, count, test (optional), testKey (tooltip) }
+-- inputs: { type, count, test (optional), testKey (tooltip) }; instead of
+-- type, types = { ... } takes any mix of them, named by nameKey.
 -- time: action ticks (vanilla plastering a wall is 100).
 DelRoads.RECIPES = {
 	{ id = "CrushBoulder", bench = "crusher", time = 300,
@@ -38,6 +39,12 @@ DelRoads.RECIPES = {
 	{ id = "BurnClinker", bench = "kiln", time = 600,
 		inputs = { { type = "Base.Limestone", count = 2 }, { type = "Base.Clay", count = 1 } },
 		outputs = { { type = "DelRoads.Clinker", count = 2 } } },
+	-- Old worlds run short of loot; abandoned cars have tyres everywhere.
+	{ id = "BurnTyre", bench = "kiln", time = 400,
+		inputs = { { types = { "Base.OldTire1", "Base.OldTire2", "Base.OldTire3", "Base.NormalTire1",
+			"Base.NormalTire2", "Base.NormalTire3", "Base.ModernTire1", "Base.ModernTire2", "Base.ModernTire3" },
+			count = 1, nameKey = "IGUI_DelRoads_AnyTyre" } },
+		outputs = { { type = "DelRoads.Bitumen", count = 1 } } },
 	{ id = "GrindCement", bench = "mill", time = 400,
 		inputs = { { type = "DelRoads.Clinker", count = 3 }, { type = "Base.EmptySandbag", count = 1 } },
 		outputs = { { type = "Base.ConcretePowder", count = 1 } } },
@@ -89,17 +96,36 @@ local function anyItem()
 	return true
 end
 
--- Items for one input, as a Java list (at most input.count of them).
+local function typesOf(input)
+	return input.types or { input.type }
+end
+
+-- How many items the player has for one input.
+function DelRoads.inputCount(inventory, input)
+	local have = 0
+	for _, fullType in ipairs(typesOf(input)) do
+		have = have + inventory:getCountTypeEvalRecurse(fullType, input.test or anyItem)
+	end
+	return have
+end
+
+-- Items for one input, a Lua array of at most input.count of them.
 function DelRoads.inputItems(inventory, input)
-	return inventory:getSomeTypeEvalRecurse(input.type, input.test or anyItem, input.count)
+	local out = {}
+	for _, fullType in ipairs(typesOf(input)) do
+		local left = input.count - #out
+		if left <= 0 then break end
+		local items = inventory:getSomeTypeEvalRecurse(fullType, input.test or anyItem, left)
+		for i = 0, items:size() - 1 do table.insert(out, items:get(i)) end
+	end
+	return out
 end
 
 -- How many times the player can run the recipe with what they carry.
 function DelRoads.timesPossible(inventory, recipe)
 	local times = nil
 	for _, input in ipairs(recipe.inputs) do
-		local have = inventory:getCountTypeEvalRecurse(input.type, input.test or anyItem)
-		local n = math.floor(have / input.count)
+		local n = math.floor(DelRoads.inputCount(inventory, input) / input.count)
 		if not times or n < times then times = n end
 	end
 	return times or 0

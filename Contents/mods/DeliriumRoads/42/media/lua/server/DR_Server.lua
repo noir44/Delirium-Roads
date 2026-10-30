@@ -176,8 +176,7 @@ function Commands.craft(player, args)
 	local inventory = player:getInventory()
 	if DelRoads.timesPossible(inventory, recipe) < 1 then return notify(player, "IGUI_DelRoads_NoInputs") end
 	for _, input in ipairs(recipe.inputs) do
-		local items = DelRoads.inputItems(inventory, input)
-		for i = 0, items:size() - 1 do removeItem(player, items:get(i)) end
+		for _, item in ipairs(DelRoads.inputItems(inventory, input)) do removeItem(player, item) end
 	end
 	for _, output in ipairs(recipe.outputs) do
 		for _ = 1, output.count do

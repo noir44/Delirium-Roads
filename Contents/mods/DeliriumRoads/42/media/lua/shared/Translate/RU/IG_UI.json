@@ -72,5 +72,7 @@
 	"IGUI_DelRoads_Recipe_BurnClinker": "Обжечь клинкер",
 	"IGUI_DelRoads_Recipe_GrindCement": "Смолоть цемент",
 	"IGUI_DelRoads_Recipe_CookAsphalt": "Сварить асфальтовую смесь",
-	"IGUI_CraftingCategories_RoadWorks": "Дорожные работы"
+	"IGUI_CraftingCategories_RoadWorks": "Дорожные работы",
+	"IGUI_DelRoads_AnyTyre": "Любая автошина",
+	"IGUI_DelRoads_Recipe_BurnTyre": "Переплавить шину в битум"
 }

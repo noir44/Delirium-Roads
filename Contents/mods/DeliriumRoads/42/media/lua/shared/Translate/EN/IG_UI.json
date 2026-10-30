@@ -72,5 +72,7 @@
 	"IGUI_DelRoads_Recipe_BurnClinker": "Burn clinker",
 	"IGUI_DelRoads_Recipe_GrindCement": "Grind cement",
 	"IGUI_DelRoads_Recipe_CookAsphalt": "Cook asphalt mix",
-	"IGUI_CraftingCategories_RoadWorks": "Road works"
+	"IGUI_CraftingCategories_RoadWorks": "Road works",
+	"IGUI_DelRoads_AnyTyre": "Any car tyre",
+	"IGUI_DelRoads_Recipe_BurnTyre": "Render a tyre into bitumen"
 }
