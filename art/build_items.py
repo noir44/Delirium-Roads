@@ -34,6 +34,16 @@ for name, (glb, longest, height, tris, tex) in SIZE.items():
                          capture_output=True, text=True)
     line = [l for l in out.stdout.splitlines() if l.startswith("PART")]
     print(name, line[0] if line else "FAILED\n" + out.stdout[-1500:] + out.stderr[-1500:])
+    if name == "AsphaltMix":
+        # Meshy garbles the lettering: a clean label baked over the front (sack_label.py).
+        here = os.path.dirname(os.path.abspath(__file__))
+        subprocess.run(["python", "-I", os.path.join(here, "sack_label_text.py")], check=True)
+        out = subprocess.run([BLENDER, "-b", "--factory-startup", "--python", os.path.join(here, "sack_label.py"), "--",
+                              os.path.abspath(os.path.join(mesh_dir, "DR_AsphaltMix.fbx")),
+                              os.path.abspath(os.path.join(tex_dir, "DR_AsphaltMix.png")),
+                              os.path.abspath(os.path.join(prev_dir, "AsphaltMix_label.png"))],
+                             capture_output=True, text=True)
+        print(name, "label", "ok" if "BAKED" in out.stdout else "FAILED\n" + out.stdout[-1500:] + out.stderr[-1500:])
     # Node scale 100 (Blender's export), vertices in metres -> script scale 0.01.
     script += ["    model DR_%s" % name, "    {",
                "        mesh = WorldItems/DR_%s," % name,
