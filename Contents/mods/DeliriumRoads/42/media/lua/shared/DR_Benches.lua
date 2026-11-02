@@ -36,10 +36,8 @@ DelRoads.RECIPES = {
 	{ id = "CrushStones", bench = "crusher", time = 300,
 		inputs = { { type = "Base.Stone2", count = 6 }, { type = "Base.EmptySandbag", count = 1 } },
 		outputs = { { type = "Base.Gravelbag", count = 1 } } },
-	-- One limestone, not two: limestone is scarce (forest boulders broken with a pickaxe, rare
-	-- foraging and loot), user decision 2026-11-01.
 	{ id = "BurnClinker", bench = "kiln", time = 600,
-		inputs = { { type = "Base.Limestone", count = 1 }, { type = "Base.Clay", count = 1 } },
+		inputs = { { type = "Base.Limestone", count = 2 }, { type = "Base.Clay", count = 1 } },
 		outputs = { { type = "DelRoads.Clinker", count = 2 } } },
 	-- Old worlds run short of loot; abandoned cars have tyres everywhere.
 	{ id = "BurnTyre", bench = "kiln", time = 400,
