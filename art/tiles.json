@@ -217,8 +217,9 @@
       "png": "frames/delroads_01_16.png",
       "props": {
         "BlocksPlacement": "",
-        "CustomName": "Asphalt Mix Pallet",
-        "GroupName": "Road",
+        "CustomItem": "DelRoads.Mov_PalletAsphaltMix",
+        "CustomName": "Pallet of Asphalt Mix",
+        "IsLow": "",
         "IsMoveAble": "",
         "PickUpWeight": "60",
         "solidtrans": ""
