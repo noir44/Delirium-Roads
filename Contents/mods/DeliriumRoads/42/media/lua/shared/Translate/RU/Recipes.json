@@ -2,5 +2,7 @@
 	"BuildRoadCrusher": "Собрать камнедробилку",
 	"BuildRoadKiln": "Собрать электропечь",
 	"BuildRoadMill": "Собрать шаровую мельницу",
-	"BuildRoadKettle": "Собрать битумный котёл"
+	"BuildRoadKettle": "Собрать битумный котёл",
+	"CreatePalletAsphaltMix": "Загрузить поддон асфальтовой смеси",
+	"OpenPalletAsphaltMix": "Разгрузить поддон асфальтовой смеси"
 }

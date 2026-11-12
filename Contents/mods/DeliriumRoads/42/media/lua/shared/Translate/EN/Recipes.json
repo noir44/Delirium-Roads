@@ -2,5 +2,7 @@
 	"BuildRoadCrusher": "Build a stone crusher",
 	"BuildRoadKiln": "Build an electric kiln",
 	"BuildRoadMill": "Build a ball mill",
-	"BuildRoadKettle": "Build an asphalt kettle"
+	"BuildRoadKettle": "Build an asphalt kettle",
+	"CreatePalletAsphaltMix": "Load a pallet of asphalt mix",
+	"OpenPalletAsphaltMix": "Unload a pallet of asphalt mix"
 }

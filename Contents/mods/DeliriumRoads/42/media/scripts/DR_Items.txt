@@ -81,4 +81,20 @@ module DelRoads
 		Weight = 0.5,
 		WorldObjectSprite = delroads_01_12,
 	}
+
+	/*
+	A pallet of asphalt mix: a moveable TILE (base:moveable + WorldObjectSprite),
+	so "Place item" puts it on the ground as a real object. The sprite is the
+	vanilla pallet construction_01_5 with 12 sacks rendered on top
+	(art/pallet/render_pallets.py).
+	*/
+	item Mov_PalletAsphaltMix
+	{
+		DisplayName = Pallet of Asphalt Mix,
+		DisplayCategory = Material,
+		ItemType = base:moveable,
+		Icon = DelRoadsPalletAsphalt,
+		Weight = 20.0,
+		WorldObjectSprite = delroads_01_16,
+	}
 }

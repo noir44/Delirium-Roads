@@ -105,4 +105,48 @@ module DelRoads
 			item 1 DelRoads.Mov_RoadKettle,
 		}
 	}
+
+	/*
+	Pallet of asphalt mix: 12 whole sacks on a vanilla pallet, roped down.
+	AsphaltMix is base:drainable, so the input needs mode:destroy flags[ItemCount]
+	- without them a count means USES, and the recipe would eat 12 charges out of
+	one sack instead of taking twelve sacks.
+	*/
+	craftRecipe CreatePalletAsphaltMix
+	{
+		timedAction = Making,
+		time = 150,
+		category = RoadWorks,
+		Tags = InHandCraft;CanBeDoneInDark,
+
+		inputs
+		{
+			item 1 [Base.Mov_PalletEmpty],
+			item 2 [Base.Rope],
+			item 12 [DelRoads.AsphaltMix] mode:destroy flags[ItemCount],
+		}
+		outputs
+		{
+			item 1 DelRoads.Mov_PalletAsphaltMix,
+		}
+	}
+
+	craftRecipe OpenPalletAsphaltMix
+	{
+		timedAction = Making,
+		time = 150,
+		category = RoadWorks,
+		Tags = InHandCraft;CanBeDoneInDark,
+
+		inputs
+		{
+			item 1 [DelRoads.Mov_PalletAsphaltMix],
+		}
+		outputs
+		{
+			item 12 DelRoads.AsphaltMix,
+			item 1 Base.Mov_PalletEmpty,
+			item 2 Base.Rope,
+		}
+	}
 }

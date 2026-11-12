@@ -5,5 +5,6 @@
 	"DelRoads.Mov_RoadCrusher": "Stone Crusher",
 	"DelRoads.Mov_RoadKiln": "Electric Kiln",
 	"DelRoads.Mov_RoadMill": "Ball Mill",
-	"DelRoads.Mov_RoadKettle": "Asphalt Kettle"
+	"DelRoads.Mov_RoadKettle": "Asphalt Kettle",
+	"DelRoads.Mov_PalletAsphaltMix": "Pallet of Asphalt Mix"
 }

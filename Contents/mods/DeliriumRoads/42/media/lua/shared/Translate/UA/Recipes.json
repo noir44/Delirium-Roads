@@ -2,5 +2,7 @@
 	"BuildRoadCrusher": "Зібрати каменедробарку",
 	"BuildRoadKiln": "Зібрати електропіч",
 	"BuildRoadMill": "Зібрати кульовий млин",
-	"BuildRoadKettle": "Зібрати бітумний котел"
+	"BuildRoadKettle": "Зібрати бітумний котел",
+	"CreatePalletAsphaltMix": "Завантажити піддон асфальтової суміші",
+	"OpenPalletAsphaltMix": "Розвантажити піддон асфальтової суміші"
 }

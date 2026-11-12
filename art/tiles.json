@@ -211,6 +211,18 @@
         "PickUpWeight": "150",
         "solidtrans": ""
       }
+    },
+    {
+      "index": 16,
+      "png": "frames/delroads_01_16.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomName": "Asphalt Mix Pallet",
+        "GroupName": "Road",
+        "IsMoveAble": "",
+        "PickUpWeight": "60",
+        "solidtrans": ""
+      }
     }
   ]
 }
