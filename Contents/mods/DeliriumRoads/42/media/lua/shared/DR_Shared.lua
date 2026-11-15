@@ -28,6 +28,11 @@ DelRoads.REACH = 3
 -- Largest side of a work order, in tiles.
 DelRoads.ORDER_MAX_SIDE = 400
 
+-- The organization activity (Delirium Economy) the admin ticks for a road
+-- service: only its head and staff mend roads and take work orders.
+DelRoads.ACTIVITY = "roads"
+if DelEcon.addActivity then DelEcon.addActivity(DelRoads.ACTIVITY, "IGUI_DelRoads_Activity") end
+
 DelRoads.TROWEL = "Base.MasonsTrowel"
 DelRoads.MIX = "DelRoads.AsphaltMix"
 
@@ -95,16 +100,23 @@ function DelRoads.hasCracks(square)
 end
 
 -- ---------------------------------------------------------------------------
--- Who may mend: staff, mayor of a City Hall or an admin
+-- Who may mend: staff or head of an organization with the road repair
+-- activity, or an admin
 -- ---------------------------------------------------------------------------
+
+-- A Delirium Economy without activities: every organization counts, as before.
+local function isRoadService(hall)
+	if not DelEcon.hasActivity then return true end
+	return DelEcon.hasActivity(hall, DelRoads.ACTIVITY)
+end
 
 local function isStaff(hall, player)
 	return type(hall) == "table" and type(hall.staff) == "table" and hall.staff[player:getUsername()] ~= nil
 end
 
--- Staff, mayor or admin of this hall.
+-- Staff, mayor or admin of this hall, if it is a road service.
 function DelRoads.isOfficial(hall, player)
-	if not hall or not player then return false end
+	if not hall or not player or not isRoadService(hall) then return false end
 	return DelEcon.canManage(hall, player) or isStaff(hall, player)
 end
 
@@ -129,9 +141,9 @@ function DelRoads.managedHalls(player)
 end
 
 -- Mayor or staff of this hall by appointment; admin rights do not count,
--- since an admin "manages" every hall.
+-- since an admin "manages" every hall. Only in a road service.
 function DelRoads.isMember(hall, player)
-	if not hall or not player then return false end
+	if not hall or not player or not isRoadService(hall) then return false end
 	return DelEcon.isMayorOf(hall, player) or isStaff(hall, player)
 end
 

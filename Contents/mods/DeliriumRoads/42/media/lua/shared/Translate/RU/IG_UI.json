@@ -2,7 +2,7 @@
 	"IGUI_DelRoads_Repair": "Заделать трещины",
 	"IGUI_DelRoads_RepairTip": "Мастерок и асфальтовая смесь: мешка хватает на 25 клеток.",
 	"IGUI_DelRoads_RepairAround": "Заделать трещины вокруг (%1)",
-	"IGUI_DelRoads_NotStaff": "Дороги ремонтируют только сотрудники мэрии",
+	"IGUI_DelRoads_NotStaff": "Дороги ремонтируют только сотрудники организации по ремонту дорог",
 	"IGUI_DelRoads_NeedOrder": "Здесь нет наряда, принятого вашей мэрией",
 	"IGUI_DelRoads_NeedTrowel": "Нужен мастерок",
 	"IGUI_DelRoads_TooFar": "Слишком далеко от клетки",
@@ -74,5 +74,6 @@
 	"IGUI_DelRoads_Recipe_CookAsphalt": "Сварить асфальтовую смесь",
 	"IGUI_CraftingCategories_RoadWorks": "Дорожные работы",
 	"IGUI_DelRoads_AnyTyre": "Любая автошина",
-	"IGUI_DelRoads_Recipe_BurnTyre": "Переплавить шину в битум"
+	"IGUI_DelRoads_Recipe_BurnTyre": "Переплавить шину в битум",
+	"IGUI_DelRoads_Activity": "Ремонт дорог"
 }
