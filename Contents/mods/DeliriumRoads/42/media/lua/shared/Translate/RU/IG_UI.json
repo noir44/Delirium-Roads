@@ -75,5 +75,6 @@
 	"IGUI_CraftingCategories_RoadWorks": "Дорожные работы",
 	"IGUI_DelRoads_AnyTyre": "Любая автошина",
 	"IGUI_DelRoads_Recipe_BurnTyre": "Переплавить шину в битум",
-	"IGUI_DelRoads_Activity": "Ремонт дорог"
+	"IGUI_DelRoads_Activity": "Ремонт дорог",
+	"IGUI_DelRoads_OrderActivity": "Наряды на ремонт дорог"
 }

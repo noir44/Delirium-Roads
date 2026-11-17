@@ -198,10 +198,11 @@ local function orderLabel(id, order)
 	return string.format("%s '%s'", tostring(id), tostring(order.title or ""))
 end
 
--- The customer hall's mayor or an admin. { hall, title, price, x1, y1, x2, y2 }
+-- The customer hall's mayor or an admin, if the hall has the work orders
+-- activity. { hall, title, price, x1, y1, x2, y2 }
 function Commands.createOrder(player, args)
 	local hall = DelEcon.getHall(DelEcon.getState(), args.hall)
-	if not DelEcon.canManage(hall, player) then return end
+	if not DelRoads.canOrder(hall, player) then return end
 	local x1, y1, x2, y2 = tonumber(args.x1), tonumber(args.y1), tonumber(args.x2), tonumber(args.y2)
 	if not x1 or not y1 or not x2 or not y2 then return end
 	local price = DelShops.parseAmount(args.price)

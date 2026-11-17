@@ -32,6 +32,10 @@ DelRoads.ORDER_MAX_SIDE = 400
 -- service: only its head and staff mend roads and take work orders.
 DelRoads.ACTIVITY = "roads"
 if DelEcon.addActivity then DelEcon.addActivity(DelRoads.ACTIVITY, "IGUI_DelRoads_Activity") end
+-- A separate tick for the customer side: only the head of an organization
+-- with it marks out work orders (user decision 2026-11-17).
+DelRoads.ORDER_ACTIVITY = "roadOrders"
+if DelEcon.addActivity then DelEcon.addActivity(DelRoads.ORDER_ACTIVITY, "IGUI_DelRoads_OrderActivity") end
 
 DelRoads.TROWEL = "Base.MasonsTrowel"
 DelRoads.MIX = "DelRoads.AsphaltMix"
@@ -110,6 +114,11 @@ local function isRoadService(hall)
 	return DelEcon.hasActivity(hall, DelRoads.ACTIVITY)
 end
 
+local function givesOrders(hall)
+	if not DelEcon.hasActivity then return true end
+	return DelEcon.hasActivity(hall, DelRoads.ORDER_ACTIVITY)
+end
+
 local function isStaff(hall, player)
 	return type(hall) == "table" and type(hall.staff) == "table" and hall.staff[player:getUsername()] ~= nil
 end
@@ -130,12 +139,18 @@ function DelRoads.isAnyOfficial(player)
 	return false
 end
 
--- Hall ids this player may give work orders for (mayor or admin).
+-- Mayor or admin of this hall, if it has the work orders activity.
+function DelRoads.canOrder(hall, player)
+	if not hall or not player or not givesOrders(hall) then return false end
+	return DelEcon.canManage(hall, player)
+end
+
+-- Hall ids this player may give work orders for.
 function DelRoads.managedHalls(player)
 	local out = {}
 	local state = DelEcon.getState()
 	for _, id in ipairs(DelEcon.hallIds(state)) do
-		if DelEcon.canManage(state.halls[id], player) then table.insert(out, id) end
+		if DelRoads.canOrder(state.halls[id], player) then table.insert(out, id) end
 	end
 	return out
 end
