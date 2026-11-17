@@ -5,7 +5,7 @@ Build 42 mod for the Delirium server. Requires **Delirium Economy** (and through
 City Hall staff mend the roads that four years of erosion have cracked.
 
 - Right-click a cracked road tile: **Mend the cracks**, or **Mend the cracks around** for the 5x5 tiles around it.
-- Needs a mason's trowel and a bag of **asphalt mix** (25 tiles a bag; the bar shows what is left).
+- Needs a mason's trowel and a bag of **asphalt mix** (10 tiles a bag; the bar shows what is left).
 
 ## Road works benches
 

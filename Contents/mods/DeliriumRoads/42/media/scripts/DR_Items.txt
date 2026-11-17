@@ -5,7 +5,7 @@ module DelRoads
 		Base
 	}
 
-	/* 25 tiles a bag; emptied, it is a sack again (like the vanilla Gravelbag) */
+	/* 10 tiles a bag; emptied, it is a sack again (like the vanilla Gravelbag) */
 	item AsphaltMix
 	{
 		DisplayName = Asphalt Mix,
@@ -13,7 +13,7 @@ module DelRoads
 		ItemType = base:drainable,
 		Weight = 8.0,
 		Icon = DelRoadsAsphaltMix,
-		UseDelta = 0.04,
+		UseDelta = 0.1,
 		UseWhileEquipped = false,
 		ReplaceOnDeplete = Base.EmptySandbag,
 		WorldStaticModel = DR_AsphaltMix,

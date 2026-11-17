@@ -1,6 +1,6 @@
 {
 	"IGUI_DelRoads_Repair": "Mend the cracks",
-	"IGUI_DelRoads_RepairTip": "Mason's trowel and asphalt mix: a bag lasts 25 tiles.",
+	"IGUI_DelRoads_RepairTip": "Mason's trowel and asphalt mix: a bag lasts 10 tiles.",
 	"IGUI_DelRoads_RepairAround": "Mend the cracks around (%1)",
 	"IGUI_DelRoads_NotStaff": "Only staff of a road repair organization mend the roads",
 	"IGUI_DelRoads_NeedOrder": "No work order accepted by your City Hall here",

@@ -1,7 +1,7 @@
 -- Delirium Roads - definitions shared by client and server.
 --
 -- City Hall staff (Delirium Economy) mend the cracked roads: a timed action
--- on a cracked tile, a mason's trowel and a bag of asphalt mix (25 tiles a
+-- on a cracked tile, a mason's trowel and a bag of asphalt mix (10 tiles a
 -- bag), made on the mod's own powered benches (DR_Benches.lua: crusher, kiln,
 -- ball mill, asphalt kettle). Staff are paid their monthly salary by
 -- Economy; this mod pays nothing itself. A mended tile cracks again after
@@ -227,8 +227,8 @@ function DelRoads.whyNot(player, x, y)
 end
 
 -- ---------------------------------------------------------------------------
--- Materials: a trowel and a bag of asphalt mix (a drainable, UseDelta 0.04 =
--- 25 tiles; the bar shows what is left).
+-- Materials: a trowel and a bag of asphalt mix (a drainable, UseDelta 0.1 =
+-- 10 tiles; the bar shows what is left).
 -- ---------------------------------------------------------------------------
 
 local function notEmpty(item)
