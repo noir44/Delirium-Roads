@@ -117,9 +117,13 @@ local function onFill(playerNum, context, worldobjects, test)
 	if DelShops.hasAdminRights(player) then
 		context:addOption(getText("IGUI_DelRoads_Dump"), player, onDump, square)
 	end
-	if not DelRoads.isAnyOfficial(player) then return end
+	-- Mending and giving orders are separate activities: a customer
+	-- organization without the road repair one still marks out orders.
+	local official = DelRoads.isAnyOfficial(player)
+	local halls = DelRoads.managedHalls(player)
+	if not official and #halls == 0 then return end
 
-	if canMend(square) then
+	if official and canMend(square) then
 		local x, y, z = square:getX(), square:getY(), square:getZ()
 		local option = context:addOption(getText("IGUI_DelRoads_Repair"), player, onRepair, { square })
 		local why = DelRoads.whyNot(player, x, y) or DelRoads.missingMaterial(player)
@@ -150,7 +154,6 @@ local function onFill(playerNum, context, worldobjects, test)
 
 	context:addOption(getText("IGUI_DelRoads_Orders"), player, onOrders)
 
-	local halls = DelRoads.managedHalls(player)
 	if #halls > 0 then
 		if not corner then
 			context:addOption(getText("IGUI_DelRoads_CornerA"), player, onCornerA, square)
