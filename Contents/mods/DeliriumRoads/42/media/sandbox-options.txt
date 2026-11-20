@@ -30,3 +30,23 @@ option DelRoads.RepairTime
 	page = DelRoads,
 	translation = DelRoads_RepairTime,
 }
+
+option DelRoads.TyreWear
+{
+	type = boolean,
+	default = true,
+
+	page = DelRoads,
+	translation = DelRoads_TyreWear,
+}
+
+option DelRoads.TyreWearRate
+{
+	type = double,
+	min = 0.0,
+	max = 20.0,
+	default = 1.0,
+
+	page = DelRoads,
+	translation = DelRoads_TyreWearRate,
+}

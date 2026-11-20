@@ -5,5 +5,9 @@
 	"Sandbox_DelRoads_RequireOrder": "Mend only inside work orders",
 	"Sandbox_DelRoads_RequireOrder_tooltip": "On: staff mend only inside a work order their City Hall has accepted. Off: any road, orders are paid contracts on top. Admins are never limited.",
 	"Sandbox_DelRoads_RepairTime": "Time to mend a tile",
-	"Sandbox_DelRoads_RepairTime_tooltip": "Length of the timed action, in action ticks (vanilla plastering a wall is 100)."
+	"Sandbox_DelRoads_RepairTime_tooltip": "Length of the timed action, in action ticks (vanilla plastering a wall is 100).",
+	"Sandbox_DelRoads_TyreWear": "Cracks wear the tyres",
+	"Sandbox_DelRoads_TyreWear_tooltip": "On: driving over cracked asphalt faster than 20 km/h now and then takes a condition point off a tyre. Mended tiles do not.",
+	"Sandbox_DelRoads_TyreWearRate": "Tyre wear on cracks, multiplier",
+	"Sandbox_DelRoads_TyreWearRate_tooltip": "1 = about 3 condition points a minute at 60 km/h on cracked road (spread over the tyres), faster driving wears more. 0 switches it off."
 }

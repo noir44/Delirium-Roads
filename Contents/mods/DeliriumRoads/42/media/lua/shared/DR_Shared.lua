@@ -60,6 +60,24 @@ function DelRoads.repairTime()
 	return math.max(1, math.floor(tonumber(sandbox().RepairTime) or 150))
 end
 
+-- Tyre wear on cracks (DR_Tyres.lua): below this speed nothing happens.
+DelRoads.TYRE_MIN_SPEED = 20
+DelRoads.TYRE_IDS = { "TireFrontLeft", "TireFrontRight", "TireRearLeft", "TireRearRight" }
+
+function DelRoads.tyreWearOn()
+	return sandbox().TyreWear ~= false and DelRoads.tyreWearRate() > 0
+end
+
+function DelRoads.tyreWearRate()
+	return math.max(0, tonumber(sandbox().TyreWearRate) or 1)
+end
+
+-- Chance per check (twice a second) of one condition point off one tyre:
+-- at 60 km/h and rate 1 about 3 points a minute of driving on cracks.
+function DelRoads.tyreWearChance(speed)
+	return 0.025 * DelRoads.tyreWearRate() * speed / 60
+end
+
 -- ---------------------------------------------------------------------------
 -- Tiles and buckets
 -- ---------------------------------------------------------------------------

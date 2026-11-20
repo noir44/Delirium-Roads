@@ -334,6 +334,33 @@ end
 
 -- ---------------------------------------------------------------------------
 
+-- ---------------------------------------------------------------------------
+-- Tyre wear on cracks: the driver's client rolled the chance (DR_Tyres.lua).
+-- The server checks the player drives and is not sending faster than the
+-- client checks, and takes a point off one fitted tyre.
+-- ---------------------------------------------------------------------------
+
+local lastWear = {}
+
+function Commands.tyreWear(player, args)
+	if not DelRoads.tyreWearOn() then return end
+	local vehicle = player:getVehicle()
+	if not vehicle or not vehicle:isDriver(player) then return end
+	local name, now = player:getUsername(), getTimestampMs()
+	if lastWear[name] and now - lastWear[name] < 400 then return end
+	lastWear[name] = now
+	local tyres = {}
+	for _, id in ipairs(DelRoads.TYRE_IDS) do
+		local part = vehicle:getPartById(id)
+		if part and part:getInventoryItem() and part:getCondition() > 0 then table.insert(tyres, part) end
+	end
+	if #tyres == 0 then return end
+	local part = tyres[ZombRand(#tyres) + 1]
+	part:setCondition(part:getCondition() - 1)
+	vehicle:transmitPartCondition(part)
+	vehicle:updatePartStats()
+end
+
 local function onInitGlobalModData()
 	state()
 	orders()
