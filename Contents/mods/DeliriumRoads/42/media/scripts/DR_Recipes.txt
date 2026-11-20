@@ -149,4 +149,86 @@ module DelRoads
 			item 2 Base.Rope,
 		}
 	}
+
+	/*
+	Pallets of bitumen (30 blocks) and gravel (18 sacks). Gravelbag is a
+	drainable like the mix: ItemCount counts sacks, IsFull keeps half-used ones
+	out (vanilla sandbag wall: flags[ItemCount;IsFull]), else unloading would
+	hand back full sacks.
+	*/
+	craftRecipe CreatePalletBitumen
+	{
+		timedAction = Making,
+		time = 150,
+		category = RoadWorks,
+		Tags = InHandCraft;CanBeDoneInDark,
+
+		inputs
+		{
+			item 1 [Base.Mov_PalletEmpty],
+			item 2 [Base.Rope],
+			item 30 [DelRoads.Bitumen],
+		}
+		outputs
+		{
+			item 1 DelRoads.Mov_PalletBitumen,
+		}
+	}
+
+	craftRecipe OpenPalletBitumen
+	{
+		timedAction = Making,
+		time = 150,
+		category = RoadWorks,
+		Tags = InHandCraft;CanBeDoneInDark,
+
+		inputs
+		{
+			item 1 [DelRoads.Mov_PalletBitumen],
+		}
+		outputs
+		{
+			item 30 DelRoads.Bitumen,
+			item 1 Base.Mov_PalletEmpty,
+			item 2 Base.Rope,
+		}
+	}
+
+	craftRecipe CreatePalletGravel
+	{
+		timedAction = Making,
+		time = 150,
+		category = RoadWorks,
+		Tags = InHandCraft;CanBeDoneInDark,
+
+		inputs
+		{
+			item 1 [Base.Mov_PalletEmpty],
+			item 2 [Base.Rope],
+			item 18 [Base.Gravelbag] mode:destroy flags[ItemCount;IsFull],
+		}
+		outputs
+		{
+			item 1 DelRoads.Mov_PalletGravel,
+		}
+	}
+
+	craftRecipe OpenPalletGravel
+	{
+		timedAction = Making,
+		time = 150,
+		category = RoadWorks,
+		Tags = InHandCraft;CanBeDoneInDark,
+
+		inputs
+		{
+			item 1 [DelRoads.Mov_PalletGravel],
+		}
+		outputs
+		{
+			item 18 Base.Gravelbag,
+			item 1 Base.Mov_PalletEmpty,
+			item 2 Base.Rope,
+		}
+	}
 }

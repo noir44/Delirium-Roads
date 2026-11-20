@@ -6,5 +6,7 @@
 	"DelRoads.Mov_RoadKiln": "Электропечь",
 	"DelRoads.Mov_RoadMill": "Шаровая мельница",
 	"DelRoads.Mov_RoadKettle": "Битумный котёл",
-	"DelRoads.Mov_PalletAsphaltMix": "Поддон асфальтовой смеси"
+	"DelRoads.Mov_PalletAsphaltMix": "Поддон асфальтовой смеси",
+	"DelRoads.Mov_PalletBitumen": "Поддон битума",
+	"DelRoads.Mov_PalletGravel": "Поддон гравия"
 }

@@ -4,5 +4,9 @@
 	"BuildRoadMill": "Собрать шаровую мельницу",
 	"BuildRoadKettle": "Собрать битумный котёл",
 	"CreatePalletAsphaltMix": "Загрузить поддон асфальтовой смеси",
-	"OpenPalletAsphaltMix": "Разгрузить поддон асфальтовой смеси"
+	"OpenPalletAsphaltMix": "Разгрузить поддон асфальтовой смеси",
+	"CreatePalletBitumen": "Загрузить поддон битума",
+	"OpenPalletBitumen": "Разгрузить поддон битума",
+	"CreatePalletGravel": "Загрузить поддон гравия",
+	"OpenPalletGravel": "Разгрузить поддон гравия"
 }

@@ -224,6 +224,32 @@
         "PickUpWeight": "60",
         "solidtrans": ""
       }
+    },
+    {
+      "index": 17,
+      "png": "frames/delroads_01_17.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomItem": "DelRoads.Mov_PalletBitumen",
+        "CustomName": "Pallet of Bitumen",
+        "IsLow": "",
+        "IsMoveAble": "",
+        "PickUpWeight": "30",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 18,
+      "png": "frames/delroads_01_18.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomItem": "DelRoads.Mov_PalletGravel",
+        "CustomName": "Pallet of Gravel",
+        "IsLow": "",
+        "IsMoveAble": "",
+        "PickUpWeight": "15",
+        "solidtrans": ""
+      }
     }
   ]
 }

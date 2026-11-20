@@ -3,5 +3,7 @@
 	"Road_Kiln": "Электропечь",
 	"Road_Mill": "Шаровая мельница",
 	"Road_Kettle": "Битумный котёл",
-	"Pallet_of_Asphalt_Mix": "Поддон асфальтовой смеси"
+	"Pallet_of_Asphalt_Mix": "Поддон асфальтовой смеси",
+	"Pallet_of_Bitumen": "Поддон битума",
+	"Pallet_of_Gravel": "Поддон гравия"
 }

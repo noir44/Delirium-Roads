@@ -97,4 +97,26 @@ module DelRoads
 		Weight = 20.0,
 		WorldObjectSprite = delroads_01_16,
 	}
+
+	/* 30 bitumen blocks on a pallet, same render pipeline (delroads_01_17) */
+	item Mov_PalletBitumen
+	{
+		DisplayName = Pallet of Bitumen,
+		DisplayCategory = Material,
+		ItemType = base:moveable,
+		Icon = DelRoadsPalletBitumen,
+		Weight = 30.0,
+		WorldObjectSprite = delroads_01_17,
+	}
+
+	/* 18 vanilla gravel sacks on a pallet (delroads_01_18) */
+	item Mov_PalletGravel
+	{
+		DisplayName = Pallet of Gravel,
+		DisplayCategory = Material,
+		ItemType = base:moveable,
+		Icon = DelRoadsPalletGravel,
+		Weight = 15.0,
+		WorldObjectSprite = delroads_01_18,
+	}
 }

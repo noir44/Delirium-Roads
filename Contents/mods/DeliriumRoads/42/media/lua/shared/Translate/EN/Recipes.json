@@ -4,5 +4,9 @@
 	"BuildRoadMill": "Build a ball mill",
 	"BuildRoadKettle": "Build an asphalt kettle",
 	"CreatePalletAsphaltMix": "Load a pallet of asphalt mix",
-	"OpenPalletAsphaltMix": "Unload a pallet of asphalt mix"
+	"OpenPalletAsphaltMix": "Unload a pallet of asphalt mix",
+	"CreatePalletBitumen": "Load a pallet of bitumen",
+	"OpenPalletBitumen": "Unload a pallet of bitumen",
+	"CreatePalletGravel": "Load a pallet of gravel",
+	"OpenPalletGravel": "Unload a pallet of gravel"
 }

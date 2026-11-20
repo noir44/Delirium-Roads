@@ -6,5 +6,7 @@
 	"DelRoads.Mov_RoadKiln": "Electric Kiln",
 	"DelRoads.Mov_RoadMill": "Ball Mill",
 	"DelRoads.Mov_RoadKettle": "Asphalt Kettle",
-	"DelRoads.Mov_PalletAsphaltMix": "Pallet of Asphalt Mix"
+	"DelRoads.Mov_PalletAsphaltMix": "Pallet of Asphalt Mix",
+	"DelRoads.Mov_PalletBitumen": "Pallet of Bitumen",
+	"DelRoads.Mov_PalletGravel": "Pallet of Gravel"
 }
