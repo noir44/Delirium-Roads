@@ -110,7 +110,8 @@ module DelRoads
 	Pallet of asphalt mix: 18 whole sacks on a vanilla pallet, roped down.
 	AsphaltMix is base:drainable, so the input needs mode:destroy flags[ItemCount]
 	- without them a count means USES, and the recipe would eat 18 charges out of
-	one sack instead of taking twelve sacks.
+	one sack instead of taking eighteen sacks. IsFull keeps half-used sacks out:
+	unloading hands back full ones.
 	*/
 	craftRecipe CreatePalletAsphaltMix
 	{
@@ -123,7 +124,7 @@ module DelRoads
 		{
 			item 1 [Base.Mov_PalletEmpty],
 			item 2 [Base.Rope],
-			item 18 [DelRoads.AsphaltMix] mode:destroy flags[ItemCount],
+			item 18 [DelRoads.AsphaltMix] mode:destroy flags[ItemCount;IsFull],
 		}
 		outputs
 		{
