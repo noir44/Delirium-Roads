@@ -74,6 +74,7 @@
 	"IGUI_DelRoads_Recipe_CookAsphalt": "Cook asphalt mix",
 	"IGUI_CraftingCategories_RoadWorks": "Road works",
 	"IGUI_DelRoads_AnyTyre": "Any car tyre",
+	"IGUI_DelRoads_EmptySack": "Empty sack",
 	"IGUI_DelRoads_Recipe_BurnTyre": "Render a tyre into bitumen",
 	"IGUI_DelRoads_Activity": "Road repair",
 	"IGUI_DelRoads_OrderActivity": "Road repair orders"

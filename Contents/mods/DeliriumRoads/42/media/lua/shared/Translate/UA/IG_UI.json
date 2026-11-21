@@ -74,6 +74,7 @@
 	"IGUI_DelRoads_Recipe_CookAsphalt": "Зварити асфальтову суміш",
 	"IGUI_CraftingCategories_RoadWorks": "Дорожні роботи",
 	"IGUI_DelRoads_AnyTyre": "Будь-яка автошина",
+	"IGUI_DelRoads_EmptySack": "Порожній мішок",
 	"IGUI_DelRoads_Recipe_BurnTyre": "Переплавити шину на бітум",
 	"IGUI_DelRoads_Activity": "Ремонт доріг",
 	"IGUI_DelRoads_OrderActivity": "Наряди на ремонт доріг"

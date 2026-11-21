@@ -27,14 +27,23 @@ local function full(item)
 end
 
 -- inputs: { type, count, test (optional), testKey (tooltip) }; instead of
--- type, types = { ... } takes any mix of them, named by nameKey.
+-- type, types = { ... } takes any mix of them, named by nameKey; sack = true
+-- takes any empty sack (see emptySack below).
 -- time: action ticks (vanilla plastering a wall is 100).
+--
+-- An empty sack is not only Base.EmptySandbag: a dozen vanilla items are
+-- called just "Sack" (wheat sacks, the treasure bag...), and a player
+-- holding seven of them saw "Sack 0/1". Taken is whatever vanilla lets you
+-- fill with a shovel: the HOLD_DIRT tag and nothing inside
+-- (server/BuildingObjects/ISShovelGroundCursor.lua:4).
+local SACK = { sack = true, count = 1, nameKey = "IGUI_DelRoads_EmptySack" }
+
 DelRoads.RECIPES = {
 	{ id = "CrushBoulder", bench = "crusher", time = 300,
-		inputs = { { type = "Base.LargeStone", count = 1 }, { type = "Base.EmptySandbag", count = 1 } },
+		inputs = { { type = "Base.LargeStone", count = 1 }, SACK },
 		outputs = { { type = "Base.Gravelbag", count = 1 } } },
 	{ id = "CrushStones", bench = "crusher", time = 300,
-		inputs = { { type = "Base.Stone2", count = 6 }, { type = "Base.EmptySandbag", count = 1 } },
+		inputs = { { type = "Base.Stone2", count = 6 }, SACK },
 		outputs = { { type = "Base.Gravelbag", count = 1 } } },
 	{ id = "BurnClinker", bench = "kiln", time = 600,
 		inputs = { { type = "Base.Limestone", count = 2 }, { type = "Base.Clay", count = 1 } },
@@ -46,13 +55,13 @@ DelRoads.RECIPES = {
 			count = 1, nameKey = "IGUI_DelRoads_AnyTyre" } },
 		outputs = { { type = "DelRoads.Bitumen", count = 1 } } },
 	{ id = "GrindCement", bench = "mill", time = 400,
-		inputs = { { type = "DelRoads.Clinker", count = 3 }, { type = "Base.EmptySandbag", count = 1 } },
+		inputs = { { type = "DelRoads.Clinker", count = 3 }, SACK },
 		outputs = { { type = "Base.ConcretePowder", count = 1 } } },
 	-- The gravel sack and the empty one are filled with the mix: two bags.
 	{ id = "CookAsphalt", bench = "kettle", time = 500,
 		inputs = { { type = "Base.Gravelbag", count = 1, test = full, testKey = "IGUI_DelRoads_FullBag" },
 			{ type = "Base.ConcretePowder", count = 1 }, { type = "DelRoads.Bitumen", count = 1 },
-			{ type = "Base.EmptySandbag", count = 1 } },
+			SACK },
 		outputs = { { type = "DelRoads.AsphaltMix", count = 2 } } },
 }
 
@@ -100,8 +109,15 @@ local function typesOf(input)
 	return input.types or { input.type }
 end
 
+local function emptySack(item)
+	if not instanceof(item, "InventoryContainer") then return false end
+	local inside = item:getInventory()
+	return inside ~= nil and inside:isEmpty()
+end
+
 -- How many items the player has for one input.
 function DelRoads.inputCount(inventory, input)
+	if input.sack then return inventory:getCountTagEvalRecurse(ItemTag.HOLD_DIRT, emptySack) end
 	local have = 0
 	for _, fullType in ipairs(typesOf(input)) do
 		have = have + inventory:getCountTypeEvalRecurse(fullType, input.test or anyItem)
@@ -112,6 +128,11 @@ end
 -- Items for one input, a Lua array of at most input.count of them.
 function DelRoads.inputItems(inventory, input)
 	local out = {}
+	if input.sack then
+		local items = inventory:getSomeTagEvalRecurse(ItemTag.HOLD_DIRT, emptySack, input.count)
+		for i = 0, items:size() - 1 do table.insert(out, items:get(i)) end
+		return out
+	end
 	for _, fullType in ipairs(typesOf(input)) do
 		local left = input.count - #out
 		if left <= 0 then break end

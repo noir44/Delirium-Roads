@@ -13,7 +13,7 @@ Built in the crafting menu (tab *Road works*, welding: blowtorch and mask), plac
 
 | Bench | Recipe |
 |---|---|
-| Stone crusher | boulder + empty sack, or 6 stones + empty sack -> gravel bag |
+| Stone crusher | boulder + empty sack, or 6 stones + empty sack -> gravel bag (any empty sack a shovel can fill) |
 | Electric kiln | 2 limestone + clay -> 2 clinker; any car tyre -> bitumen |
 | Ball mill | 3 clinker + empty sack -> bag of cement |
 | Asphalt kettle | full gravel bag + cement + bitumen + empty sack -> 2 bags of asphalt mix |
