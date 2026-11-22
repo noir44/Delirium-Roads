@@ -54,8 +54,11 @@ DelRoads.RECIPES = {
 			"Base.NormalTire2", "Base.NormalTire3", "Base.ModernTire1", "Base.ModernTire2", "Base.ModernTire3" },
 			count = 1, nameKey = "IGUI_DelRoads_AnyTyre" } },
 		outputs = { { type = "DelRoads.Bitumen", count = 1 } } },
+	-- No sack: vanilla's bag of cement is a plain item and never gives a sack
+	-- back, so one taken here was lost for good (2026-11-22). Sacks only go
+	-- into gravel and asphalt mix, and both turn back into a sack when spent.
 	{ id = "GrindCement", bench = "mill", time = 400,
-		inputs = { { type = "DelRoads.Clinker", count = 3 }, SACK },
+		inputs = { { type = "DelRoads.Clinker", count = 3 } },
 		outputs = { { type = "Base.ConcretePowder", count = 1 } } },
 	-- The gravel sack and the empty one are filled with the mix: two bags.
 	{ id = "CookAsphalt", bench = "kettle", time = 500,
