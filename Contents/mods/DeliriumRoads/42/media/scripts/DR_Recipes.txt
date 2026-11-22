@@ -91,7 +91,10 @@ module DelRoads
 		xpAward = MetalWelding:30;Electricity:20,
 		inputs
 		{
-			item 1 [Base.MetalDrum],
+			/* any barrel a player can pick up as its own item: the grey metal drum
+			   (crafted_01_32), the orange and the two military green ones - their
+			   tiles carry CustomItem; Base.MetalDrum alone is in no loot or recipe */
+			item 1 [Base.MetalDrum;Base.Mov_OrangeBarrel;Base.Mov_LightGreenBarrel;Base.Mov_DarkGreenBarrel],
 			item 2 [Base.SheetMetal],
 			item 2 [Base.MetalPipe],
 			item 2 [Base.ElectricWire],
