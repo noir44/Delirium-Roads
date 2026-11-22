@@ -8,5 +8,11 @@
 	"CreatePalletBitumen": "Завантажити піддон бітуму",
 	"OpenPalletBitumen": "Розвантажити піддон бітуму",
 	"CreatePalletGravel": "Завантажити піддон гравію",
-	"OpenPalletGravel": "Розвантажити піддон гравію"
+	"OpenPalletGravel": "Розвантажити піддон гравію",
+	"CreatePalletAsphaltMix12": "Завантажити піддон асфальтової суміші (12)",
+	"OpenPalletAsphaltMix12": "Розвантажити піддон асфальтової суміші (12)",
+	"CreatePalletAsphaltMix6": "Завантажити піддон асфальтової суміші (6)",
+	"OpenPalletAsphaltMix6": "Розвантажити піддон асфальтової суміші (6)",
+	"DelRoads_AsphaltFloor": "Асфальт",
+	"Build_DelRoads_AsphaltFloor": "Асфальт"
 }

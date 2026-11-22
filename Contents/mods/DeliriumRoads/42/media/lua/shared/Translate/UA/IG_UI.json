@@ -1,7 +1,6 @@
 {
 	"IGUI_DelRoads_Repair": "Закласти тріщини",
-	"IGUI_DelRoads_RepairTip": "Кельма й асфальтова суміш: мішка вистачає на 15 клітинок.",
-	"IGUI_DelRoads_RepairAround": "Закласти тріщини навколо (%1)",
+	"IGUI_DelRoads_RepairTip": "Обирайте клітинки з тріщинами по одній: ЛКМ ставить клітинку в чергу, ПКМ або Esc — завершити. Потрібні кельма й асфальтова суміш: мішка вистачає на 15 клітинок.",
 	"IGUI_DelRoads_NotStaff": "Дороги ремонтують лише працівники організації з ремонту доріг",
 	"IGUI_DelRoads_NeedOrder": "Тут немає наряду, прийнятого вашою мерією",
 	"IGUI_DelRoads_NeedTrowel": "Потрібна кельма",
@@ -77,5 +76,8 @@
 	"IGUI_DelRoads_EmptySack": "Порожній мішок",
 	"IGUI_DelRoads_Recipe_BurnTyre": "Переплавити шину на бітум",
 	"IGUI_DelRoads_Activity": "Ремонт доріг",
-	"IGUI_DelRoads_OrderActivity": "Наряди на ремонт доріг"
+	"IGUI_DelRoads_OrderActivity": "Наряди на ремонт доріг",
+	"IGUI_DelRoads_OrderOnMap": "Наряд: розмітити на мапі",
+	"IGUI_DelRoads_MapPickA": "Наряд: клацніть перший кут (закрийте мапу, щоб скасувати)",
+	"IGUI_DelRoads_MapPickB": "Наряд: клацніть другий кут — %1 × %2 (не більше %3)"
 }

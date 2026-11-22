@@ -150,6 +150,80 @@ module DelRoads
 			item 2 Base.Rope,
 		}
 	}
+	craftRecipe CreatePalletAsphaltMix12
+	{
+		timedAction = Making,
+		time = 150,
+		category = RoadWorks,
+		Tags = InHandCraft;CanBeDoneInDark,
+
+		inputs
+		{
+			item 1 [Base.Mov_PalletEmpty],
+			item 2 [Base.Rope],
+			item 12 [DelRoads.AsphaltMix] mode:destroy flags[ItemCount;IsFull],
+		}
+		outputs
+		{
+			item 1 DelRoads.Mov_PalletAsphaltMix12,
+		}
+	}
+
+	craftRecipe OpenPalletAsphaltMix12
+	{
+		timedAction = Making,
+		time = 150,
+		category = RoadWorks,
+		Tags = InHandCraft;CanBeDoneInDark,
+
+		inputs
+		{
+			item 1 [DelRoads.Mov_PalletAsphaltMix12],
+		}
+		outputs
+		{
+			item 12 DelRoads.AsphaltMix,
+			item 1 Base.Mov_PalletEmpty,
+			item 2 Base.Rope,
+		}
+	}
+	craftRecipe CreatePalletAsphaltMix6
+	{
+		timedAction = Making,
+		time = 150,
+		category = RoadWorks,
+		Tags = InHandCraft;CanBeDoneInDark,
+
+		inputs
+		{
+			item 1 [Base.Mov_PalletEmpty],
+			item 2 [Base.Rope],
+			item 6 [DelRoads.AsphaltMix] mode:destroy flags[ItemCount;IsFull],
+		}
+		outputs
+		{
+			item 1 DelRoads.Mov_PalletAsphaltMix6,
+		}
+	}
+
+	craftRecipe OpenPalletAsphaltMix6
+	{
+		timedAction = Making,
+		time = 150,
+		category = RoadWorks,
+		Tags = InHandCraft;CanBeDoneInDark,
+
+		inputs
+		{
+			item 1 [DelRoads.Mov_PalletAsphaltMix6],
+		}
+		outputs
+		{
+			item 6 DelRoads.AsphaltMix,
+			item 1 Base.Mov_PalletEmpty,
+			item 2 Base.Rope,
+		}
+	}
 
 	/*
 	Pallets of bitumen (30 blocks) and gravel (18 sacks). Gravelbag is a

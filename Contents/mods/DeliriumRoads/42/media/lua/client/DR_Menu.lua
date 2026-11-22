@@ -1,6 +1,7 @@
--- Delirium Roads - world context menu: mend the cracks of a tile or of the
--- tiles around it, open the work orders, mark a new order (two corners),
--- and for admins a dump of the square (what erosion put on it).
+-- Delirium Roads - world context menu: mend cracks (a cursor to pick the
+-- tiles, DR_RepairCursor), open the work orders, mark a new order (two
+-- corners on the ground or on the world map), and for admins a dump of the
+-- square (what erosion put on it).
 
 if isServer() then return end
 
@@ -8,9 +9,6 @@ require "ISUI/ISToolTip"
 require "ISUI/ISTextBox"
 require "DR_Client"
 require "TimedActions/DR_RepairAction"
-
--- Tiles around the clicked one mended in one go: (2 * AROUND + 1)^2.
-local AROUND = 2
 
 -- First corner of the order being marked: { x, y } or nil.
 local corner = nil
@@ -25,24 +23,14 @@ local function disable(option, text)
 end
 
 -- Cracked tiles not mended yet, as far as this client knows.
-local function canMend(square)
+function DelRoads.canMend(square)
 	if not square or not DelRoads.hasCracks(square) then return false end
 	local x, y, z = square:getX(), square:getY(), square:getZ()
 	return DelRoads.bucketLoaded(x, y) and not DelRoads.isMended(x, y, z)
 end
 
-local function queueRepairs(player, squares)
-	local first = true
-	for _, square in ipairs(squares) do
-		if luautils.walkAdj(player, square, not first) then
-			ISTimedActionQueue.add(DR_RepairAction:new(player, square))
-			first = false
-		end
-	end
-end
-
-local function onRepair(player, squares)
-	queueRepairs(player, squares)
+local function onRepair(player)
+	getCell():setDrag(DR_RepairCursor:new(player), player:getPlayerNum())
 end
 
 local function onOrders(player)
@@ -59,30 +47,43 @@ local function onCornerReset()
 end
 
 -- Second prompt: the price, paid from the customer's treasury when the
--- contractor reports the order done. target carries the first answers.
-local function onOrderPrice(target, button, playerNum)
-	if button.internal ~= "OK" or not corner then return end
+-- contractor reports the order done. target carries the area and the title.
+local function onOrderPrice(target, button)
+	if button.internal ~= "OK" then return end
 	DelRoads.send("createOrder", { hall = target.hallId, title = target.title, price = button.parent.entry:getText(),
-		x1 = corner.x, y1 = corner.y, x2 = target.x2, y2 = target.y2 })
-	corner = nil
+		x1 = target.x1, y1 = target.y1, x2 = target.x2, y2 = target.y2 })
 end
 
-local function onOrderTitle(target, button, hallId, x2, y2, playerNum)
-	if button.internal ~= "OK" or not corner then return end
-	local answers = { hallId = hallId, title = button.parent.entry:getText(), x2 = x2, y2 = y2 }
-	local box = ISTextBox:new(0, 0, 320, 160, getText("IGUI_DelRoads_OrderPricePrompt"), "0", answers, onOrderPrice,
-		playerNum, playerNum)
+local function onOrderTitle(target, button, playerNum)
+	if button.internal ~= "OK" then return end
+	target.title = button.parent.entry:getText()
+	local box = ISTextBox:new(0, 0, 320, 160, getText("IGUI_DelRoads_OrderPricePrompt"), "0", target, onOrderPrice,
+		playerNum)
+	box:initialise()
+	box:addToUIManager()
+end
+
+-- The title and price prompts for an area marked out on the ground or on
+-- the map; the server sorts the corners and checks the size.
+function DelRoads.askOrder(player, hallId, x1, y1, x2, y2)
+	local hall = DelEcon.getHall(DelEcon.getState(), hallId)
+	local target = { hallId = hallId, x1 = x1, y1 = y1, x2 = x2, y2 = y2 }
+	local box = ISTextBox:new(0, 0, 320, 160, getText("IGUI_DelRoads_OrderTitlePrompt", DelEcon.hallName(hall)), "",
+		target, onOrderTitle, player:getPlayerNum(), player:getPlayerNum())
 	box:initialise()
 	box:addToUIManager()
 end
 
 local function onCornerB(player, square, hallId)
 	if not corner then return end
-	local hall = DelEcon.getHall(DelEcon.getState(), hallId)
-	local box = ISTextBox:new(0, 0, 320, 160, getText("IGUI_DelRoads_OrderTitlePrompt", DelEcon.hallName(hall)), "",
-		{}, onOrderTitle, player:getPlayerNum(), hallId, square:getX(), square:getY(), player:getPlayerNum())
-	box:initialise()
-	box:addToUIManager()
+	local x1, y1 = corner.x, corner.y
+	corner = nil
+	DelRoads.askOrder(player, hallId, x1, y1, square:getX(), square:getY())
+end
+
+local function onMapOrder(player, hallId)
+	corner = nil
+	if DelRoads.startMapPick then DelRoads.startMapPick(player, hallId) end
 end
 
 local function onDump(player, square)
@@ -123,9 +124,9 @@ local function onFill(playerNum, context, worldobjects, test)
 	local halls = DelRoads.managedHalls(player)
 	if not official and #halls == 0 then return end
 
-	if official and canMend(square) then
-		local x, y, z = square:getX(), square:getY(), square:getZ()
-		local option = context:addOption(getText("IGUI_DelRoads_Repair"), player, onRepair, { square })
+	if official and DelRoads.canMend(square) then
+		local x, y = square:getX(), square:getY()
+		local option = context:addOption(getText("IGUI_DelRoads_Repair"), player, onRepair)
 		local why = DelRoads.whyNot(player, x, y) or DelRoads.missingMaterial(player)
 		if why then
 			disable(option, getText(why))
@@ -136,32 +137,24 @@ local function onFill(playerNum, context, worldobjects, test)
 			tip.description = getText("IGUI_DelRoads_RepairTip")
 			option.toolTip = tip
 		end
-		if not why then
-			local around = {}
-			for dy = -AROUND, AROUND do
-				for dx = -AROUND, AROUND do
-					local other = getCell():getGridSquare(x + dx, y + dy, z)
-					if canMend(other) and DelRoads.whyNot(player, x + dx, y + dy) == nil then
-						table.insert(around, other)
-					end
-				end
-			end
-			if #around > 1 then
-				context:addOption(getText("IGUI_DelRoads_RepairAround", tostring(#around)), player, onRepair, around)
-			end
-		end
 	end
 
 	context:addOption(getText("IGUI_DelRoads_Orders"), player, onOrders)
 
 	if #halls > 0 then
+		local state = DelEcon.getState()
+		local mapParent = context:addOption(getText("IGUI_DelRoads_OrderOnMap"))
+		local mapSub = ISContextMenu:getNew(context)
+		context:addSubMenu(mapParent, mapSub)
+		for _, id in ipairs(halls) do
+			mapSub:addOption(DelEcon.hallName(state.halls[id]), player, onMapOrder, id)
+		end
 		if not corner then
 			context:addOption(getText("IGUI_DelRoads_CornerA"), player, onCornerA, square)
 		else
 			local parent = context:addOption(getText("IGUI_DelRoads_CornerB", tostring(corner.x), tostring(corner.y)))
 			local sub = ISContextMenu:getNew(context)
 			context:addSubMenu(parent, sub)
-			local state = DelEcon.getState()
 			for _, id in ipairs(halls) do
 				sub:addOption(DelEcon.hallName(state.halls[id]), player, onCornerB, square, id)
 			end

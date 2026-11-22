@@ -26,7 +26,7 @@ DelRoads.BUCKET = 100
 -- How far from the tile the player may stand when the server checks.
 DelRoads.REACH = 3
 -- Largest side of a work order, in tiles.
-DelRoads.ORDER_MAX_SIDE = 400
+DelRoads.ORDER_MAX_SIDE = 1000
 
 -- The organization activity (Delirium Economy) the admin ticks for a road
 -- service: only its head and staff mend roads and take work orders.

@@ -124,3 +124,82 @@ function ISWorldMap:render()
 			1.0, 0.85, 0.2, 1.0, UIFont.Medium)
 	end
 end
+
+-- ---------------------------------------------------------------------------
+-- Marking a new order on the world map: two left clicks (a click, not a
+-- pan) set the corners, the frame follows the mouse in between; closing the
+-- map cancels. Then the same title and price prompts as on the ground.
+-- ---------------------------------------------------------------------------
+
+-- { player, hallId, x, y (first corner or nil) } while picking.
+local pick = nil
+
+function DelRoads.startMapPick(player, hallId)
+	pick = { player = player, hallId = hallId }
+	ISWorldMap.ShowWorldMap(player:getPlayerNum())
+	-- the map may be off on this server (ISWorldMap.IsAllowed)
+	if not (ISWorldMap_instance and ISWorldMap_instance:isVisible()) then pick = nil end
+end
+
+local function worldAt(map, x, y)
+	return math.floor(map.mapAPI:uiToWorldX(x, y)), math.floor(map.mapAPI:uiToWorldY(x, y))
+end
+
+local function frame(map, x1, y1, x2, y2, r, g, b)
+	local api = map.mapAPI
+	x1, x2 = math.min(x1, x2), math.max(x1, x2) + 1
+	y1, y2 = math.min(y1, y2), math.max(y1, y2) + 1
+	local pts = { { x1, y1 }, { x2, y1 }, { x2, y2 }, { x1, y2 } }
+	for i = 1, 4 do
+		local a, c = pts[i], pts[i % 4 + 1]
+		map.javaObject:DrawLine(nil, api:worldToUIX(a[1], a[2]), api:worldToUIY(a[1], a[2]),
+			api:worldToUIX(c[1], c[2]), api:worldToUIY(c[1], c[2]), 3, r, g, b, 1.0)
+	end
+end
+
+local renderWithOrders = ISWorldMap.render
+
+function ISWorldMap:render()
+	renderWithOrders(self)
+	if not pick then return end
+	local mx, my = worldAt(self, self:getMouseX(), self:getMouseY())
+	local text
+	if pick.x then
+		local w, h = math.abs(mx - pick.x) + 1, math.abs(my - pick.y) + 1
+		local ok = w <= DelRoads.ORDER_MAX_SIDE and h <= DelRoads.ORDER_MAX_SIDE
+		frame(self, pick.x, pick.y, mx, my, ok and 0.2 or 1.0, ok and 0.9 or 0.2, 0.2)
+		text = getText("IGUI_DelRoads_MapPickB", tostring(w), tostring(h), tostring(DelRoads.ORDER_MAX_SIDE))
+	else
+		text = getText("IGUI_DelRoads_MapPickA")
+	end
+	self:drawTextCentre(text, self.width / 2, 60, 1.0, 0.85, 0.2, 1.0, UIFont.Large)
+end
+
+local mouseUp = ISWorldMap.onMouseUp
+
+function ISWorldMap:onMouseUp(x, y)
+	local click = pick and self.dragging and not self.dragMoved
+	local result = mouseUp(self, x, y)
+	if not click then return result end
+	local wx, wy = worldAt(self, x, y)
+	if not pick.x then
+		pick.x, pick.y = wx, wy
+		return true
+	end
+	local done = pick
+	pick = nil
+	if math.abs(wx - done.x) + 1 > DelRoads.ORDER_MAX_SIDE or math.abs(wy - done.y) + 1 > DelRoads.ORDER_MAX_SIDE then
+		done.player:setHaloNote(getText("IGUI_DelRoads_OrderTooBig", tostring(DelRoads.ORDER_MAX_SIDE)), 255, 80, 80, 300)
+		return true
+	end
+	ISWorldMap.HideWorldMap(done.player:getPlayerNum())
+	DelRoads.askOrder(done.player, done.hallId, done.x, done.y, wx, wy)
+	return true
+end
+
+local closeMap = ISWorldMap.close
+
+function ISWorldMap:close()
+	pick = nil
+	return closeMap(self)
+end

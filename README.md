@@ -4,8 +4,10 @@ Build 42 mod for the Delirium server. Requires **Delirium Economy** (and through
 
 City Hall staff mend the roads that four years of erosion have cracked.
 
-- Right-click a cracked road tile: **Mend the cracks**, or **Mend the cracks around** for the 5x5 tiles around it.
+- Right-click a cracked road tile: **Mend the cracks** turns on a cursor, like chopping trees: every left click on a cracked tile queues a repair there, right click or Esc ends it.
 - Needs a mason's trowel and a bag of **asphalt mix** (15 tiles a bag; the bar shows what is left).
+- **Laying asphalt**: build menu, *Outdoors* - *Asphalt*, next to the gravel floor. A mason's trowel and 3 uses of a bag of mix per tile; anyone can lay it.
+- Pallets of asphalt mix hold 18, 12 or 6 bags (three layers, two, one): pallet + 2 ropes + the bags, only full bags.
 
 ## Road works benches
 
@@ -22,7 +24,7 @@ Bitumen comes from car tyres rendered in the kiln (abandoned cars have them ever
 
 - Staff, mayors and admins may mend. Staff are paid their monthly salary by Delirium Economy.
 - A mended tile cracks again after about `RepairLastsDays` game days (120 by default, give or take a quarter).
-- **Road work orders** are paid contracts between City Halls. The customer hall's mayor marks the area from the context menu (first corner, second corner, title, price). Staff or the mayor of another hall (the contractor) accept it, mend the roads and press **Done**: the price goes at once from the customer's treasury to the contractor's (if the treasury can't pay, the order stays in progress). The contractor's mayor pays the staff as usual.
+- **Road work orders** are paid contracts between City Halls. The customer hall's mayor marks the area from the context menu - two corners on the ground, or **on the world map** (two clicks) - then a title and a price; a side may be up to 1000 tiles. Staff or the mayor of another hall (the contractor) accept it, mend the roads and press **Done**: the price goes at once from the customer's treasury to the contractor's (if the treasury can't pay, the order stays in progress). The contractor's mayor pays the staff as usual.
 - An accepted order's area is outlined on the ground and on the world map (Show the area / On the map in the orders window).
 - With `RequireOrder` on, staff mend only inside an order their City Hall has accepted.
 

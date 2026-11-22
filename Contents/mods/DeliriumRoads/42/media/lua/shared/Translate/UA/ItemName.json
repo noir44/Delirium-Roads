@@ -8,5 +8,7 @@
 	"DelRoads.Mov_RoadKettle": "Бітумний котел",
 	"DelRoads.Mov_PalletAsphaltMix": "Піддон асфальтової суміші",
 	"DelRoads.Mov_PalletBitumen": "Піддон бітуму",
-	"DelRoads.Mov_PalletGravel": "Піддон гравію"
+	"DelRoads.Mov_PalletGravel": "Піддон гравію",
+	"DelRoads.Mov_PalletAsphaltMix12": "Піддон асфальтової суміші (12)",
+	"DelRoads.Mov_PalletAsphaltMix6": "Піддон асфальтової суміші (6)"
 }

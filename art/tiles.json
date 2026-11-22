@@ -250,6 +250,32 @@
         "PickUpWeight": "15",
         "solidtrans": ""
       }
+    },
+    {
+      "index": 19,
+      "png": "frames/delroads_01_19.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomItem": "DelRoads.Mov_PalletAsphaltMix6",
+        "CustomName": "Pallet of Asphalt Mix 6",
+        "IsLow": "",
+        "IsMoveAble": "",
+        "PickUpWeight": "20",
+        "solidtrans": ""
+      }
+    },
+    {
+      "index": 20,
+      "png": "frames/delroads_01_20.png",
+      "props": {
+        "BlocksPlacement": "",
+        "CustomItem": "DelRoads.Mov_PalletAsphaltMix12",
+        "CustomName": "Pallet of Asphalt Mix 12",
+        "IsLow": "",
+        "IsMoveAble": "",
+        "PickUpWeight": "40",
+        "solidtrans": ""
+      }
     }
   ]
 }

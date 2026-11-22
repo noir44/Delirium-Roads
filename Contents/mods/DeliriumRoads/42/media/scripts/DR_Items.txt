@@ -98,6 +98,27 @@ module DelRoads
 		WorldObjectSprite = delroads_01_16,
 	}
 
+	/* the same pallet with 12 and 6 sacks: two layers and one (2026-11-22) */
+	item Mov_PalletAsphaltMix12
+	{
+		DisplayName = Pallet of Asphalt Mix (12),
+		DisplayCategory = Material,
+		ItemType = base:moveable,
+		Icon = DelRoadsPalletAsphalt12,
+		Weight = 13.0,
+		WorldObjectSprite = delroads_01_20,
+	}
+
+	item Mov_PalletAsphaltMix6
+	{
+		DisplayName = Pallet of Asphalt Mix (6),
+		DisplayCategory = Material,
+		ItemType = base:moveable,
+		Icon = DelRoadsPalletAsphalt6,
+		Weight = 7.0,
+		WorldObjectSprite = delroads_01_19,
+	}
+
 	/* 30 bitumen blocks on a pallet, same render pipeline (delroads_01_17) */
 	item Mov_PalletBitumen
 	{

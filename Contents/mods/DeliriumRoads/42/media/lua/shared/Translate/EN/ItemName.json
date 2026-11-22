@@ -8,5 +8,7 @@
 	"DelRoads.Mov_RoadKettle": "Asphalt Kettle",
 	"DelRoads.Mov_PalletAsphaltMix": "Pallet of Asphalt Mix",
 	"DelRoads.Mov_PalletBitumen": "Pallet of Bitumen",
-	"DelRoads.Mov_PalletGravel": "Pallet of Gravel"
+	"DelRoads.Mov_PalletGravel": "Pallet of Gravel",
+	"DelRoads.Mov_PalletAsphaltMix12": "Pallet of Asphalt Mix (12)",
+	"DelRoads.Mov_PalletAsphaltMix6": "Pallet of Asphalt Mix (6)"
 }

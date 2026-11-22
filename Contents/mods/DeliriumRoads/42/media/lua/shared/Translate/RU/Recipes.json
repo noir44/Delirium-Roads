@@ -8,5 +8,11 @@
 	"CreatePalletBitumen": "Загрузить поддон битума",
 	"OpenPalletBitumen": "Разгрузить поддон битума",
 	"CreatePalletGravel": "Загрузить поддон гравия",
-	"OpenPalletGravel": "Разгрузить поддон гравия"
+	"OpenPalletGravel": "Разгрузить поддон гравия",
+	"CreatePalletAsphaltMix12": "Загрузить поддон асфальтовой смеси (12)",
+	"OpenPalletAsphaltMix12": "Разгрузить поддон асфальтовой смеси (12)",
+	"CreatePalletAsphaltMix6": "Загрузить поддон асфальтовой смеси (6)",
+	"OpenPalletAsphaltMix6": "Разгрузить поддон асфальтовой смеси (6)",
+	"DelRoads_AsphaltFloor": "Асфальт",
+	"Build_DelRoads_AsphaltFloor": "Асфальт"
 }

@@ -1,0 +1,54 @@
+/*
+	Laying asphalt: a floor in the build menu (Outdoors, next to vanilla's
+	gravel floor, entity_floor_gravel.txt), the dark vanilla road asphalt
+	blends_street_01_80. Vanilla's floor code places it and clears the
+	square (BuildRecipeCode.floor). A drainable input counts uses, so
+	3 [DelRoads.AsphaltMix] is 3 of the 15 uses of a bag.
+*/
+module Base
+{
+	entity DelRoads_AsphaltFloor
+	{
+		component UiConfig
+		{
+			xuiSkin = default,
+			entityStyle = ES_DelRoads_AsphaltFloor,
+			uiEnabled = false,
+		}
+		component SpriteConfig
+		{
+			isThumpable = false,
+			OnIsValid = BuildRecipeCode.floor.OnIsValid,
+			OnCreate = BuildRecipeCode.floor.OnCreate,
+			face SINGLE
+			{
+				layer
+				{
+					row = blends_street_01_80,
+				}
+			}
+		}
+		component CraftRecipe
+		{
+			timedAction = BuildLowNoTool,
+			time = 150,
+			category = Outdoors,
+			Tooltip = Tooltip_craft_DelRoadsAsphaltFloorDesc,
+			inputs
+			{
+				item 1 tags[base:masonstrowel] mode:keep flags[Prop1;MayDegradeLight],
+				item 3 [DelRoads.AsphaltMix],
+			}
+		}
+	}
+
+	xuiSkin default
+	{
+		entity ES_DelRoads_AsphaltFloor
+		{
+			LuaWindowClass = ISEntityWindow,
+			DisplayName = Build_DelRoads_AsphaltFloor,
+			Icon = DelRoads_Build_AsphaltFloor,
+		}
+	}
+}

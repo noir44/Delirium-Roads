@@ -1,7 +1,6 @@
 {
 	"IGUI_DelRoads_Repair": "Mend the cracks",
-	"IGUI_DelRoads_RepairTip": "Mason's trowel and asphalt mix: a bag lasts 15 tiles.",
-	"IGUI_DelRoads_RepairAround": "Mend the cracks around (%1)",
+	"IGUI_DelRoads_RepairTip": "Pick the cracked tiles one by one: left click queues a tile, right click or Esc ends. A mason's trowel and asphalt mix: a bag covers 15 tiles.",
 	"IGUI_DelRoads_NotStaff": "Only staff of a road repair organization mend the roads",
 	"IGUI_DelRoads_NeedOrder": "No work order accepted by your City Hall here",
 	"IGUI_DelRoads_NeedTrowel": "You need a mason's trowel",
@@ -77,5 +76,8 @@
 	"IGUI_DelRoads_EmptySack": "Empty sack",
 	"IGUI_DelRoads_Recipe_BurnTyre": "Render a tyre into bitumen",
 	"IGUI_DelRoads_Activity": "Road repair",
-	"IGUI_DelRoads_OrderActivity": "Road repair orders"
+	"IGUI_DelRoads_OrderActivity": "Road repair orders",
+	"IGUI_DelRoads_OrderOnMap": "Work order: mark out on the map",
+	"IGUI_DelRoads_MapPickA": "Work order: click the first corner (close the map to cancel)",
+	"IGUI_DelRoads_MapPickB": "Work order: click the second corner - %1 x %2 (at most %3)"
 }
