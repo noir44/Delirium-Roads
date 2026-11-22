@@ -13,11 +13,10 @@ local function itemName(fullType)
 	return getItemNameFromFullType(fullType) or fullType
 end
 
-local function tooltip(player, recipe, powered)
-	local inventory = player:getInventory()
+local function tooltip(player, src, recipe, powered)
 	local lines = { getText("IGUI_DelRoads_Takes") }
 	for _, input in ipairs(recipe.inputs) do
-		local have = DelRoads.inputCount(inventory, input)
+		local have = DelRoads.inputCount(src, input)
 		local color = have >= input.count and "<RGB:0.4,1,0.4>" or "<RGB:1,0.4,0.4>"
 		local name = input.nameKey and getText(input.nameKey) or itemName(input.type)
 		if input.testKey then name = name .. " (" .. getText(input.testKey) .. ")" end
@@ -52,19 +51,20 @@ local function onFill(playerNum, context, worldobjects, test)
 	if not bench then return end
 
 	local powered = DelRoads.hasPower(square)
+	local src = DelRoads.sources(player, square)
 	local parent = context:addOption(getText("IGUI_DelRoads_Bench_" .. kind))
 	local sub = ISContextMenu:getNew(context)
 	context:addSubMenu(parent, sub)
 	for _, recipe in ipairs(DelRoads.recipesOf(kind)) do
-		local times = DelRoads.timesPossible(player:getInventory(), recipe)
+		local times = DelRoads.timesPossible(src, recipe)
 		local name = getText("IGUI_DelRoads_Recipe_" .. recipe.id)
 		local option = sub:addOption(name, player, queue, square, recipe, 1)
-		option.toolTip = tooltip(player, recipe, powered)
+		option.toolTip = tooltip(player, src, recipe, powered)
 		if not powered or times < 1 then option.notAvailable = true end
 		if powered and times > 1 then
 			local all = sub:addOption(getText("IGUI_DelRoads_RecipeAll", name, tostring(times)), player, queue, square,
 				recipe, times)
-			all.toolTip = tooltip(player, recipe, powered)
+			all.toolTip = tooltip(player, src, recipe, powered)
 		end
 	end
 end

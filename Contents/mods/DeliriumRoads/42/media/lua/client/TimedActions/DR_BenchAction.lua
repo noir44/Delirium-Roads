@@ -14,7 +14,7 @@ DR_BenchAction = ISBaseTimedAction:derive("DR_BenchAction")
 function DR_BenchAction:isValid()
 	local _, kind = DelRoads.benchAt(self.square)
 	return kind == self.recipe.bench and DelRoads.hasPower(self.square)
-		and DelRoads.timesPossible(self.character:getInventory(), self.recipe) >= 1
+		and DelRoads.timesPossible(DelRoads.sources(self.character, self.square), self.recipe) >= 1
 end
 
 function DR_BenchAction:waitToStart()

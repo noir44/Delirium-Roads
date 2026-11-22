@@ -9,7 +9,7 @@ City Hall staff mend the roads that four years of erosion have cracked.
 
 ## Road works benches
 
-Built in the crafting menu (tab *Road works*, welding: blowtorch and mask), placed like any furniture, four facings. They work only with **electricity** on their square: a generator in range, or the grid indoors. Right-click a bench for its recipes ("all" queues as many runs as you can afford).
+Built in the crafting menu (tab *Road works*, welding: blowtorch and mask), placed like any furniture, four facings. They work only with **electricity** on their square: a generator in range, or the grid indoors. Right-click a bench for its recipes ("all" queues as many runs as you can afford). Materials are taken from your inventory first, then from crates and the floor on the squares around the bench; the products go to your inventory.
 
 | Bench | Recipe |
 |---|---|

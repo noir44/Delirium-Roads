@@ -74,7 +74,18 @@ local function notify(player, key, arg1)
 	reply(player, "notify", { key = key, arg1 = arg1 })
 end
 
+-- From a container (the player's, a crate, a bag) or off the floor - the
+-- floor branch is vanilla's (ISTransferAction.lua:131-159).
 local function removeItem(player, item)
+	local world = item:getWorldItem()
+	if world and world:getSquare() then
+		local square = world:getSquare()
+		if DesignationZoneAnimal then DesignationZoneAnimal.removeItemFromGround(world) end
+		square:transmitRemoveItemFromSquare(world)
+		square:removeWorldObject(world)
+		item:setWorldItem(nil)
+		return
+	end
 	local container = item:getContainer()
 	if not container then return end
 	player:removeFromHands(item)
@@ -174,9 +185,10 @@ function Commands.craft(player, args)
 	if kind ~= recipe.bench then return end
 	if not DelRoads.hasPower(square) then return notify(player, "IGUI_DelRoads_NoPower") end
 	local inventory = player:getInventory()
-	if DelRoads.timesPossible(inventory, recipe) < 1 then return notify(player, "IGUI_DelRoads_NoInputs") end
+	local src = DelRoads.sources(player, square)
+	if DelRoads.timesPossible(src, recipe) < 1 then return notify(player, "IGUI_DelRoads_NoInputs") end
 	for _, input in ipairs(recipe.inputs) do
-		for _, item in ipairs(DelRoads.inputItems(inventory, input)) do removeItem(player, item) end
+		for _, item in ipairs(DelRoads.inputItems(src, input)) do removeItem(player, item) end
 	end
 	for _, output in ipairs(recipe.outputs) do
 		for _ = 1, output.count do

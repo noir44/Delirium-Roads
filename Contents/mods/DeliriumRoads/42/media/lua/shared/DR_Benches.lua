@@ -118,38 +118,107 @@ local function emptySack(item)
 	return inside ~= nil and inside:isEmpty()
 end
 
--- How many items the player has for one input.
-function DelRoads.inputCount(inventory, input)
-	if input.sack then return inventory:getCountTagEvalRecurse(ItemTag.HOLD_DIRT, emptySack) end
-	local have = 0
+-- Where a bench takes its inputs from: the player's inventory first, then
+-- the crates and the floor on the 3x3 around the bench - the same squares
+-- and rules as vanilla's loot window (ISInventoryPage.lua:1667-1758): same
+-- floor, reachable through walls, safehouse loot allowed, no thumpables
+-- locked to someone else. A bag on the floor counts as a container, the
+-- floor items themselves as a plain list. The client builds it for the
+-- tooltip, the server again for the craft.
+-- { containers = { ItemContainer... }, floor = { InventoryItem... } }
+function DelRoads.sources(player, benchSquare)
+	local src = { containers = { player:getInventory() }, floor = {} }
+	if not benchSquare then return src end
+	local cell = getCell()
+	local bx, by, bz = benchSquare:getX(), benchSquare:getY(), benchSquare:getZ()
+	for dy = -1, 1 do
+		for dx = -1, 1 do
+			local sq = cell:getGridSquare(bx + dx, by + dy, bz)
+			if sq and (sq == benchSquare or benchSquare:canReachTo(sq)) and SafeHouse.isSafehouseAllowLoot(sq, player) then
+				local wobs = sq:getWorldObjects()
+				for i = 0, wobs:size() - 1 do
+					local item = wobs:get(i):getItem()
+					if item then
+						table.insert(src.floor, item)
+						if instanceof(item, "InventoryContainer") and item:getInventory() then
+							table.insert(src.containers, item:getInventory())
+						end
+					end
+				end
+				local objects = sq:getObjects()
+				for i = 0, objects:size() - 1 do
+					local o = objects:get(i)
+					if not (instanceof(o, "IsoThumpable") and o:isLockedToCharacter(player)) then
+						for c = 0, o:getContainerCount() - 1 do
+							table.insert(src.containers, o:getContainerByIndex(c))
+						end
+					end
+				end
+			end
+		end
+	end
+	return src
+end
+
+-- Does a loose floor item fit one input?
+local function fits(item, input)
+	if input.sack then return item:hasTag(ItemTag.HOLD_DIRT) and emptySack(item) end
 	for _, fullType in ipairs(typesOf(input)) do
-		have = have + inventory:getCountTypeEvalRecurse(fullType, input.test or anyItem)
+		if item:getFullType() == fullType then return (input.test or anyItem)(item) end
+	end
+	return false
+end
+
+-- How many items there are for one input.
+function DelRoads.inputCount(src, input)
+	local have = 0
+	for _, container in ipairs(src.containers) do
+		if input.sack then
+			have = have + container:getCountTagEvalRecurse(ItemTag.HOLD_DIRT, emptySack)
+		else
+			for _, fullType in ipairs(typesOf(input)) do
+				have = have + container:getCountTypeEvalRecurse(fullType, input.test or anyItem)
+			end
+		end
+	end
+	for _, item in ipairs(src.floor) do
+		if fits(item, input) then have = have + 1 end
 	end
 	return have
 end
 
--- Items for one input, a Lua array of at most input.count of them.
-function DelRoads.inputItems(inventory, input)
+-- Items for one input, a Lua array of at most input.count of them,
+-- inventory first.
+function DelRoads.inputItems(src, input)
 	local out = {}
-	if input.sack then
-		local items = inventory:getSomeTagEvalRecurse(ItemTag.HOLD_DIRT, emptySack, input.count)
+	local function add(items)
 		for i = 0, items:size() - 1 do table.insert(out, items:get(i)) end
-		return out
 	end
-	for _, fullType in ipairs(typesOf(input)) do
-		local left = input.count - #out
-		if left <= 0 then break end
-		local items = inventory:getSomeTypeEvalRecurse(fullType, input.test or anyItem, left)
-		for i = 0, items:size() - 1 do table.insert(out, items:get(i)) end
+	for _, container in ipairs(src.containers) do
+		if input.sack then
+			local left = input.count - #out
+			if left <= 0 then return out end
+			add(container:getSomeTagEvalRecurse(ItemTag.HOLD_DIRT, emptySack, left))
+		else
+			for _, fullType in ipairs(typesOf(input)) do
+				local left = input.count - #out
+				if left <= 0 then return out end
+				add(container:getSomeTypeEvalRecurse(fullType, input.test or anyItem, left))
+			end
+		end
+	end
+	for _, item in ipairs(src.floor) do
+		if #out >= input.count then return out end
+		if fits(item, input) then table.insert(out, item) end
 	end
 	return out
 end
 
--- How many times the player can run the recipe with what they carry.
-function DelRoads.timesPossible(inventory, recipe)
+-- How many times the recipe can run with what there is.
+function DelRoads.timesPossible(src, recipe)
 	local times = nil
 	for _, input in ipairs(recipe.inputs) do
-		local n = math.floor(DelRoads.inputCount(inventory, input) / input.count)
+		local n = math.floor(DelRoads.inputCount(src, input) / input.count)
 		if not times or n < times then times = n end
 	end
 	return times or 0
