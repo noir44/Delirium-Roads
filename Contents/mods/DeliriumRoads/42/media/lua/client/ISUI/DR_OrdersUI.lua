@@ -218,6 +218,7 @@ end
 function DelRoadsOrdersUI:onAccept()
 	local row = self:selectedRow()
 	local hallId = self:acceptHall(row)
+	if hallId and DelRoads.hallAtLimit(hallId) then return end
 	if hallId then DelRoads.send("acceptOrder", { id = row.id, hall = hallId }) end
 end
 
@@ -265,8 +266,14 @@ function DelRoadsOrdersUI:prerender()
 	local active = row ~= nil and row.order.status ~= DelRoads.DONE
 	local acceptHall = self:acceptHall(row)
 	if acceptHall then
-		self.acceptBtn:setTitle(getText("IGUI_DelRoads_AcceptFor",
-			DelEcon.hallName(DelEcon.getHall(DelEcon.getState(), acceptHall))))
+		local full = DelRoads.hallAtLimit(acceptHall)
+		if full then
+			self.acceptBtn:setTitle(getText("IGUI_DelRoads_OrderLimit", tostring(DelRoads.maxOrdersPerHall())))
+		else
+			self.acceptBtn:setTitle(getText("IGUI_DelRoads_AcceptFor",
+				DelEcon.hallName(DelEcon.getHall(DelEcon.getState(), acceptHall))))
+		end
+		self.acceptBtn:setEnable(not full)
 	end
 	self.acceptBtn:setVisible(acceptHall ~= nil)
 	self.doneBtn:setVisible(self:isContractor(row))

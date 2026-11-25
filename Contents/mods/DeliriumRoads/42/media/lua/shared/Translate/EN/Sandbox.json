@@ -9,5 +9,7 @@
 	"Sandbox_DelRoads_TyreWear": "Cracks wear the tyres",
 	"Sandbox_DelRoads_TyreWear_tooltip": "On: driving over cracked asphalt faster than 20 km/h now and then takes a condition point off a tyre. Mended tiles do not.",
 	"Sandbox_DelRoads_TyreWearRate": "Tyre wear on cracks, multiplier",
-	"Sandbox_DelRoads_TyreWearRate_tooltip": "1 = about 3 condition points a minute at 60 km/h on cracked road (spread over the tyres), faster driving wears more. 0 switches it off."
+	"Sandbox_DelRoads_TyreWearRate_tooltip": "1 = about 3 condition points a minute at 60 km/h on cracked road (spread over the tyres), faster driving wears more. 0 switches it off.",
+	"Sandbox_DelRoads_MaxOrdersPerHall": "Work orders in progress per organization",
+	"Sandbox_DelRoads_MaxOrdersPerHall_tooltip": "How many work orders one organization may have accepted and not finished at once, so that one contractor cannot take them all. 0 - no limit."
 }

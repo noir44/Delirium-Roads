@@ -26,6 +26,7 @@ Bitumen comes from car tyres rendered in the kiln (abandoned cars have them ever
 - A mended tile cracks again after about `RepairLastsDays` game days (120 by default, give or take a quarter).
 - **Road work orders** are paid contracts between City Halls. The customer hall's mayor marks the area from the context menu - two corners on the ground, or **on the world map** (two clicks) - then a title and a price; a side may be up to 1000 tiles. Staff or the mayor of another hall (the contractor) accept it, mend the roads and press **Done**: the price goes at once from the customer's treasury to the contractor's (if the treasury can't pay, the order stays in progress). The contractor's mayor pays the staff as usual.
 - An accepted order's area is outlined on the ground and on the world map (Show the area / On the map in the orders window).
+- An organization may have at most `MaxOrdersPerHall` orders in progress (2 by default); it takes the next one after reporting one done or giving it back.
 - With `RequireOrder` on, staff mend only inside an order their City Hall has accepted.
 
 ## Sandbox options (page DelRoads)
@@ -34,4 +35,5 @@ Bitumen comes from car tyres rendered in the kiln (abandoned cars have them ever
 |---|---|---|
 | `RepairLastsDays` | 120 | game days until a mended tile cracks again |
 | `RequireOrder` | false | mend only inside work orders |
+| `MaxOrdersPerHall` | 2 | work orders one organization may have in progress at once (0 = no limit) |
 | `RepairTime` | 150 | length of the action, in action ticks |

@@ -20,6 +20,17 @@ option DelRoads.RequireOrder
 	translation = DelRoads_RequireOrder,
 }
 
+option DelRoads.MaxOrdersPerHall
+{
+	type = integer,
+	min = 0,
+	max = 100,
+	default = 2,
+
+	page = DelRoads,
+	translation = DelRoads_MaxOrdersPerHall,
+}
+
 option DelRoads.RepairTime
 {
 	type = integer,

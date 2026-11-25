@@ -79,5 +79,6 @@
 	"IGUI_DelRoads_OrderActivity": "Наряды на ремонт дорог",
 	"IGUI_DelRoads_OrderOnMap": "Наряд: разметить на карте",
 	"IGUI_DelRoads_MapPickA": "Наряд: щёлкните первый угол (закройте карту, чтобы отменить)",
-	"IGUI_DelRoads_MapPickB": "Наряд: щёлкните второй угол — %1 × %2 (не больше %3)"
+	"IGUI_DelRoads_MapPickB": "Наряд: щёлкните второй угол — %1 × %2 (не больше %3)",
+	"IGUI_DelRoads_OrderLimit": "Предел нарядов в работе у организации: %1"
 }

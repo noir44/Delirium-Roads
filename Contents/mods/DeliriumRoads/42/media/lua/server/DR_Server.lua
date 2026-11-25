@@ -247,6 +247,9 @@ function Commands.acceptOrder(player, args)
 		if hallId == args.hall then allowed = true end
 	end
 	if not allowed then return end
+	if DelRoads.hallAtLimit(args.hall) then
+		return notify(player, "IGUI_DelRoads_OrderLimit", DelRoads.maxOrdersPerHall())
+	end
 	order.status = DelRoads.ACCEPTED
 	order.contractor = args.hall
 	order.acceptedBy = player:getUsername()

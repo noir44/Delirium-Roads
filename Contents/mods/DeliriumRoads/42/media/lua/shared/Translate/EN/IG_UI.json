@@ -79,5 +79,6 @@
 	"IGUI_DelRoads_OrderActivity": "Road repair orders",
 	"IGUI_DelRoads_OrderOnMap": "Work order: mark out on the map",
 	"IGUI_DelRoads_MapPickA": "Work order: click the first corner (close the map to cancel)",
-	"IGUI_DelRoads_MapPickB": "Work order: click the second corner - %1 x %2 (at most %3)"
+	"IGUI_DelRoads_MapPickB": "Work order: click the second corner - %1 x %2 (at most %3)",
+	"IGUI_DelRoads_OrderLimit": "Work orders in progress per organization: %1 at most"
 }

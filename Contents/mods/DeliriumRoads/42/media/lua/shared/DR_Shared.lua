@@ -56,6 +56,12 @@ function DelRoads.requireOrder()
 	return sandbox().RequireOrder == true
 end
 
+-- Orders one organization may have in progress at once (0 = no limit), so
+-- that one contractor cannot take them all and sit on them.
+function DelRoads.maxOrdersPerHall()
+	return math.max(0, math.floor(tonumber(sandbox().MaxOrdersPerHall) or 2))
+end
+
 function DelRoads.repairTime()
 	return math.max(1, math.floor(tonumber(sandbox().RepairTime) or 150))
 end
@@ -234,6 +240,22 @@ end
 function DelRoads.isContractor(order, player)
 	return order.status == DelRoads.ACCEPTED
 		and DelRoads.isOfficial(DelEcon.getHall(DelEcon.getState(), order.contractor), player)
+end
+
+-- Orders this hall has accepted and not finished yet.
+function DelRoads.ordersInProgress(hallId)
+	local n = 0
+	local orders = DelRoads.getOrders()
+	if not orders or not hallId then return n end
+	for _, order in pairs(orders.list) do
+		if order.status == DelRoads.ACCEPTED and order.contractor == hallId then n = n + 1 end
+	end
+	return n
+end
+
+function DelRoads.hallAtLimit(hallId)
+	local max = DelRoads.maxOrdersPerHall()
+	return max > 0 and DelRoads.ordersInProgress(hallId) >= max
 end
 
 -- Accepted orders covering the tile that this player works on.

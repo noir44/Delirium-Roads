@@ -79,5 +79,6 @@
 	"IGUI_DelRoads_OrderActivity": "Наряди на ремонт доріг",
 	"IGUI_DelRoads_OrderOnMap": "Наряд: розмітити на мапі",
 	"IGUI_DelRoads_MapPickA": "Наряд: клацніть перший кут (закрийте мапу, щоб скасувати)",
-	"IGUI_DelRoads_MapPickB": "Наряд: клацніть другий кут — %1 × %2 (не більше %3)"
+	"IGUI_DelRoads_MapPickB": "Наряд: клацніть другий кут — %1 × %2 (не більше %3)",
+	"IGUI_DelRoads_OrderLimit": "Межа нарядів у роботі в організації: %1"
 }
